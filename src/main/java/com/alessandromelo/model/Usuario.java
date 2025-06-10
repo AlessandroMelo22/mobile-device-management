@@ -28,8 +28,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String matricula, String cargo, Boolean ativo, List<Dispositivo> dispositivos, Departamento departamento) {
-        this.id = id;
+    public Usuario(String nome, String email, String matricula, String cargo, Boolean ativo, List<Dispositivo> dispositivos, Departamento departamento) {
         this.nome = nome;
         this.email = email;
         this.matricula = matricula;
@@ -37,14 +36,6 @@ public class Usuario {
         this.ativo = ativo;
         this.dispositivos = dispositivos;
         this.departamento = departamento;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {

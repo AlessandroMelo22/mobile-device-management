@@ -4,10 +4,12 @@ import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.repository.UsuarioRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
@@ -19,50 +21,50 @@ public class UsuarioService {
     }
 
 
-    //listar todos os usuarios
+//Listar todos os usuarios: (CERTO)
     public List<Usuario> listarUsuarios(){
         return this.usuarioRepository.findAll();
     }
 
-    //Buscar Usuario por id:
-    public Optional<Usuario> buscarUsuarioPorId(Long id){
-       return this.usuarioRepository.findById(id);
+//Buscar Usuario por id: (CERTO)
+    public Optional<Usuario> buscarUsuarioPorId(Long usuarioId){
+        return this.usuarioRepository.findById(usuarioId);
     }
 
-    //Cadastrar Usuario:
-    public void cadastrarUsuario(Usuario usuario){
-        this.usuarioRepository.save(usuario);
+//Cadastrar Usuario: (CERTO)
+    public Usuario cadastrarUsuario(Usuario usuario){
+        return this.usuarioRepository.save(usuario);
     }
 
-    //Atualizar Usuario: (CONSERTAR O PROBLEMA DE CAMPOS NULOS)
-    public Usuario atualizarUsuario(Long usuarioId, Usuario atualizado){
+//Atualizar Usuario: (Está correto porem futuramente deve ser corrigido o problema dos possiveis campos nulos)
+    public Optional<Usuario> atualizarUsuario(Long usuarioId, Usuario atualizado){
 
-        Usuario existente = this.usuarioRepository.getReferenceById(usuarioId);
-
-        existente.setNome(atualizado.getNome());
-        existente.setCargo(atualizado.getCargo());
-        existente.setMatricula(atualizado.getMatricula());
-        existente.setEmail(atualizado.getEmail());
-        existente.setDepartamento(atualizado.getDepartamento());
-        existente.setAtivo(atualizado.getAtivo());
-        existente.setDispositivos(atualizado.getDispositivos());
-
-        return this.usuarioRepository.save(existente);
+        return this.usuarioRepository.findById(usuarioId)
+                .map(usuario -> {
+                    usuario.setNome(atualizado.getNome());
+                    usuario.setCargo(atualizado.getCargo());
+                    usuario.setDepartamento(atualizado.getDepartamento());
+                    usuario.setMatricula(atualizado.getMatricula());
+                    usuario.setEmail(atualizado.getEmail());
+                    usuario.setDispositivos(atualizado.getDispositivos());
+                    usuario.setAtivo(atualizado.getAtivo());
+                    return this.usuarioRepository.save(usuario);
+        } );
     }
 
-    //Remover Usuario:
+//Remover Usuario:
     public void removerUsuario(Long usuarioId){
         this.usuarioRepository.deleteById(usuarioId);
     }
 
-    //Listar Dispositivos cadastrados em um determinado Usuario
-    public List<Dispositivo> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
-        return this.usuarioRepository.getReferenceById(usuarioId).getDispositivos();
+//Listar Dispositivos cadastrados em um determinado Usuario   (CERTO)
+    public Optional<List<Dispositivo>> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
+        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDispositivos);
     }
 
-    //Buscar Departamento do Usuario
-    public Departamento buscarDepartamentoDoUsuario(Long usuarioId){
-        return this.usuarioRepository.getReferenceById(usuarioId).getDepartamento();
+//Buscar Departamento do Usuario (CERTO)
+    public Optional<Departamento> buscarDepartamentoDoUsuario(Long usuarioId){
+        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDepartamento);
     }
 
 
