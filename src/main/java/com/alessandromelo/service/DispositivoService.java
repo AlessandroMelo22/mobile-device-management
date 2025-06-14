@@ -3,13 +3,16 @@ package com.alessandromelo.service;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.repository.DispositivoRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class DispositivoService {
 
     private DispositivoRepository dispositivoRepository;
+
 
     public DispositivoService() {
     }
@@ -19,48 +22,50 @@ public class DispositivoService {
 
 
 
-    //Listar todos os dispositivos:
+    //Listar todos os dispositivos: (CERTO)
     public List<Dispositivo> listarTodosDispositivos(){
         return this.dispositivoRepository.findAll();
     }
 
-    //Buscar Dispositivo por Id:
+    //Buscar Dispositivo por Id: (CERTO)
     public Optional<Dispositivo> buscarDispositivoPorId(Long dispositivoId){
         return this.dispositivoRepository.findById(dispositivoId);
     }
 
-    //Cadastrar Dispositivo:
-    public Dispositivo cadastrarDispositivo(Dispositivo dispositivo){
-        return this.dispositivoRepository.save(dispositivo);
+    //Cadastrar Dispositivo: (CERTO)
+    public Dispositivo cadastrarNovoDispositivo(Dispositivo novoDispositivo){
+        return this.dispositivoRepository.save(novoDispositivo);
     }
 
     //Atualizar Dispositivo: (CONSERTAR O PROBLEMA DE CAMPOS NULOS)
-    public Dispositivo atualizarDispositivo(Long dispositivoId, Dispositivo atualizado){
+    public Optional<Dispositivo> atualizarDispositivo(Long dispositivoId, Dispositivo atualizado){
 
-        Dispositivo existente = this.dispositivoRepository.getReferenceById(dispositivoId);
-        existente.setModelo(atualizado.getModelo());
-        existente.setMarca(atualizado.getMarca());
-        existente.setDataAquisicao(atualizado.getDataAquisicao());
-        existente.setObservacoes(atualizado.getObservacoes());
-        existente.setDataUltimaAtualizacao(atualizado.getDataUltimaAtualizacao());
-        existente.setNumeroSerie(atualizado.getNumeroSerie());
-        existente.setSistemaOperacional(atualizado.getSistemaOperacional());
-        existente.setStatus(atualizado.getStatus());
-        existente.setUsuario(atualizado.getUsuario());
-        existente.setVersaoSO(atualizado.getVersaoSO());
-
-        return this.dispositivoRepository.save(existente);
+       return this.dispositivoRepository.findById(dispositivoId)
+               .map(dispositivo -> {
+                   dispositivo.setModelo(atualizado.getModelo());
+                   dispositivo.setMarca(atualizado.getMarca());
+                   dispositivo.setNumeroSerie(atualizado.getNumeroSerie());
+                   dispositivo.setSistemaOperacional(atualizado.getSistemaOperacional());
+                   dispositivo.setVersaoSO(atualizado.getVersaoSO());
+                   dispositivo.setDataUltimaAtualizacao(atualizado.getDataUltimaAtualizacao());
+                   dispositivo.setDataAquisicao(atualizado.getDataAquisicao());
+                   dispositivo.setUsuario(atualizado.getUsuario());
+                   dispositivo.setObservacoes(atualizado.getObservacoes());
+                   dispositivo.setStatus(atualizado.getStatus());
+                   return this.dispositivoRepository.save(dispositivo);
+               });
     }
 
-    //Remover Dispositivo:
-    public void removerDispositivo(Long dispositivoId){
+    //Remover Dispositivo: (CERTO)
+    public void removerDispositivoPorId(Long dispositivoId){
         this.dispositivoRepository.deleteById(dispositivoId);
     }
 
 
-    //Listar Usuario cadastrado em um determinado Dispositivo
-    public Usuario buscarUsuarioCadastradoNoDispositivo(Long dispositivoId){
-        return this.dispositivoRepository.getReferenceById(dispositivoId).getUsuario();
+    //Buscar Usuario cadastrado em um determinado Dispositivo: (CERTO)
+    public Optional<Usuario> buscarUsuarioCadastradoNoDispositivo(Long dispositivoId){
+        return this.dispositivoRepository.findById(dispositivoId)
+                .map(Dispositivo::getUsuario);
     }
 
 }

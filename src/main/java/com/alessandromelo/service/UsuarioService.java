@@ -32,8 +32,8 @@ public class UsuarioService {
     }
 
 //Cadastrar Usuario: (CERTO)
-    public Usuario cadastrarUsuario(Usuario usuario){
-        return this.usuarioRepository.save(usuario);
+    public Usuario cadastrarNovoUsuario(Usuario novoUsuario){
+        return this.usuarioRepository.save(novoUsuario);
     }
 
 //Atualizar Usuario: (Está correto porem futuramente deve ser corrigido o problema dos possiveis campos nulos)
@@ -49,11 +49,11 @@ public class UsuarioService {
                     usuario.setDispositivos(atualizado.getDispositivos());
                     usuario.setAtivo(atualizado.getAtivo());
                     return this.usuarioRepository.save(usuario);
-        } );
+                } );
     }
 
 //Remover Usuario:
-    public void removerUsuario(Long usuarioId){
+    public void removerUsuarioPorId(Long usuarioId){
         this.usuarioRepository.deleteById(usuarioId);
     }
 

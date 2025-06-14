@@ -26,8 +26,7 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, Usuario usuario, String dataAquisicao, String dataUltimaAtualizacao, String observacoes) {
-        this.id = id;
+    public Dispositivo(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, Usuario usuario, String dataAquisicao, String dataUltimaAtualizacao, String observacoes) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
@@ -40,13 +39,7 @@ public class Dispositivo {
         this.observacoes = observacoes;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getModelo() {
         return modelo;

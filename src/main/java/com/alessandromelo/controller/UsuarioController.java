@@ -1,5 +1,6 @@
 package com.alessandromelo.controller;
 
+import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.service.UsuarioService;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -34,14 +34,14 @@ public class UsuarioController {
     @GetMapping("/{usuarioId}")
     public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long usuarioId){
         return this.usuarioService.buscarUsuarioPorId(usuarioId)
-                .map(ResponseEntity:: ok).orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
 //Cadastrar novo Usuario:
     @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<Usuario> cadastrarNovoUsuario(@RequestBody Usuario novoUsuario){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(this.usuarioService.cadastrarUsuario(usuario));
+                .body(this.usuarioService.cadastrarNovoUsuario(novoUsuario));
     }
 
 //Atualizar Usuario:
@@ -54,11 +54,11 @@ public class UsuarioController {
     }
 
 
-//Remover Usuario:
+//Remover Usuario por Id:
     @DeleteMapping("/{usuarioId}")
-    public ResponseEntity<Void> removerUsuario(@PathVariable Long usuarioId){
+    public ResponseEntity<Void> removerUsuarioPorId(@PathVariable Long usuarioId){
 
-        this.usuarioService.removerUsuario(usuarioId);
+        this.usuarioService.removerUsuarioPorId(usuarioId);
         return ResponseEntity.notFound().build();
     }
 
@@ -70,5 +70,11 @@ public class UsuarioController {
                 map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+//Buscar Departamento do Usuario:
+    @GetMapping("/{usuarioId}")
+    public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId){
 
+        return this.usuarioService.buscarDepartamentoDoUsuario(usuarioId)
+                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 }

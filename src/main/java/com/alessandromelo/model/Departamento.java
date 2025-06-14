@@ -19,20 +19,13 @@ public class Departamento {
     public Departamento() {
     }
 
-    public Departamento(Long id, String nome, String sigla, List<Usuario> usuarios) {
-        this.id = id;
+    public Departamento(String nome, String sigla, List<Usuario> usuarios) {
         this.nome = nome;
         this.sigla = sigla;
         this.usuarios = usuarios;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
