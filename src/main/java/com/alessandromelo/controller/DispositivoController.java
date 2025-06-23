@@ -60,11 +60,11 @@ public class DispositivoController {
     public ResponseEntity<Void> removerDispositivoPorId(@PathVariable Long dispositivoId){
 
         this.dispositivoService.removerDispositivoPorId(dispositivoId);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build(); //204
     }
 
 //Buscar Usuario que está cadastrado no dispositivo:
-    @GetMapping("/{dispositivoId}")
+    @GetMapping("/{dispositivoId}/usuarios")
     public ResponseEntity<Usuario> buscarUsuarioCadastradoNoDispositivo(@PathVariable Long dispositivoId){
 
         return this.dispositivoService.buscarUsuarioCadastradoNoDispositivo(dispositivoId)

@@ -59,11 +59,11 @@ public class DepartamentoController {
     public ResponseEntity<Void> removerDepartamentoPorId(@PathVariable Long departamentoId){
 
         this.departamentoService.removerDepartamentoPorId(departamentoId);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build(); //204
     }
 
 //Listar Usuarios que pertencem a um Departamento:
-    @GetMapping("/{departamentoId}")
+    @GetMapping("/{departamentoId}/usuarios")
     public ResponseEntity<List<Usuario>> listarUsuariosDoDepartamento(@PathVariable Long departamentoId){
 
         return this.departamentoService.listarUsuariosDoDepartamento(departamentoId)

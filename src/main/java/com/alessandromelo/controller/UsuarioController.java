@@ -24,6 +24,13 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+
+    @GetMapping("/teste")
+    public String hello() {
+        return "Funcionando!";
+    }
+
+
 //ListarUsuarios: CONSERTAR
     @GetMapping
     public ResponseEntity<List<Usuario>> listarUsuarios(){
@@ -59,11 +66,11 @@ public class UsuarioController {
     public ResponseEntity<Void> removerUsuarioPorId(@PathVariable Long usuarioId){
 
         this.usuarioService.removerUsuarioPorId(usuarioId);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build(); //204
     }
 
 //Listar Dispositivos cadastrados em um determinado Usuario:
-    @GetMapping("/{usuarioId}")
+    @GetMapping("/{usuarioId}/dispositivos")
     public ResponseEntity<List<Dispositivo>> listarDispositivosCadastradosEmUmUsuario(@PathVariable Long usuarioId){
 
         return this.usuarioService.listarDispositivosCadastradosEmUmUsuario(usuarioId).
@@ -71,7 +78,7 @@ public class UsuarioController {
     }
 
 //Buscar Departamento do Usuario:
-    @GetMapping("/{usuarioId}")
+    @GetMapping("/{usuarioId}/departamento")
     public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId){
 
         return this.usuarioService.buscarDepartamentoDoUsuario(usuarioId)

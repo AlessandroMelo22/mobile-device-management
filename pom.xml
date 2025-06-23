@@ -70,5 +70,42 @@
             <version>6.2.1</version>
         </dependency>
 
+        <!--dependência do Servlet-->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
+<!--            Depois eu verifico se funciona sem isso-->
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
+
+<!--    usado para startar a aplicação utilizando o plugin maven tomcat-->
+    <packaging>war</packaging>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.opoo.maven</groupId>
+                <artifactId>tomcat9-maven-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <path>/</path>
+                    <port>8080</port>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
 </project>
