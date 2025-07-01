@@ -1,15 +1,12 @@
 package com.alessandromelo;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.alessandromelo.config.AppConfig;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
+@SpringBootApplication(scanBasePackages = "com.alessandromelo")
 public class Main {
     public static void main(String[] args) {
 
-        AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(AppConfig.class);
-
-
+        SpringApplication.run( Main.class,args);
     }
 }

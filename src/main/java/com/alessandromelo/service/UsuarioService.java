@@ -3,7 +3,12 @@ package com.alessandromelo.service;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
+import com.alessandromelo.repository.DepartamentoRepository;
+import com.alessandromelo.repository.DispositivoRepository;
 import com.alessandromelo.repository.UsuarioRepository;
+import com.alessandromelo.service.exception.departamento.DepartamentoNaoEncontradoException;
+import com.alessandromelo.service.exception.dispositivo.DispositivoNaoEncontradoException;
+import com.alessandromelo.service.exception.usuario.UsuarioNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +18,19 @@ import java.util.Optional;
 public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
+    private DepartamentoRepository departamentoRepository;
+    private DispositivoRepository dispositivoRepository;
 
-    public UsuarioService() {
-    }
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+
+    public UsuarioService(UsuarioRepository usuarioRepository, DepartamentoRepository departamentoRepository,
+                          DispositivoRepository dispositivoRepository) {
+
         this.usuarioRepository = usuarioRepository;
+        this.departamentoRepository = departamentoRepository;
+        this.dispositivoRepository = dispositivoRepository;
     }
 
-
-//Listar todos os usuarios: (CERTO)
+    //Listar todos os usuarios: (CERTO)
     public List<Usuario> listarUsuarios(){
         return this.usuarioRepository.findAll();
     }
@@ -61,6 +70,35 @@ public class UsuarioService {
     public Optional<List<Dispositivo>> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
         return this.usuarioRepository.findById(usuarioId).map(Usuario::getDispositivos);
     }
+
+//Setar Dispositivos a um Usuario:
+    public Dispositivo vincularDispositivoExistenteEmUmUsuarioExistente(Long usuarioId, Long dispositivoId){
+        Usuario usuario = this.usuarioRepository.findById(usuarioId)
+                .orElseThrow(()-> new UsuarioNaoEncontradoException("Usuário com o id " + usuarioId + " não encontrado!"));
+
+        Dispositivo dispositivo = this.dispositivoRepository.findById(dispositivoId)
+                .orElseThrow(() -> new DispositivoNaoEncontradoException("Dispositivo com o id " + dispositivoId + " não encontrado!"));
+
+        dispositivo.setUsuario(usuario);
+        return this.dispositivoRepository.save(dispositivo);
+
+    }
+
+
+//Setar Departamento a um Usuario:
+    public Usuario vincularDepartamentoExistenteEmUmUsuarioExistente(Long usuarioId, Long departamentoId){
+
+        Usuario usuario = this.usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com o id " + usuarioId + " não encontrado!"));
+
+        Departamento departamento = this.departamentoRepository.findById(departamentoId)
+                .orElseThrow(() -> new DepartamentoNaoEncontradoException("Departamento com o id " + departamentoId + " não encontrado!"));
+
+        usuario.setDepartamento(departamento);
+
+        return this.usuarioRepository.save(usuario);
+    }
+
 
 //Buscar Departamento do Usuario (CERTO)
     public Optional<Departamento> buscarDepartamentoDoUsuario(Long usuarioId){

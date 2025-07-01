@@ -14,8 +14,7 @@ public class DispositivoService {
     private DispositivoRepository dispositivoRepository;
 
 
-    public DispositivoService() {
-    }
+
     public DispositivoService(DispositivoRepository dispositivoRepository) {
         this.dispositivoRepository = dispositivoRepository;
     }

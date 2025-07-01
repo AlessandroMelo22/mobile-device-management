@@ -13,8 +13,7 @@ public class DepartamentoService {
 
     private DepartamentoRepository departamentoRepository;
 
-    public DepartamentoService() {
-    }
+
     public DepartamentoService(DepartamentoRepository departamentoRepository) {
         this.departamentoRepository = departamentoRepository;
     }

@@ -17,18 +17,10 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
 
-    public UsuarioController() {
-    }
-
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
-
-    @GetMapping("/teste")
-    public String hello() {
-        return "Funcionando!";
-    }
 
 
 //ListarUsuarios: CONSERTAR
@@ -77,6 +69,14 @@ public class UsuarioController {
                 map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+//Setar Dispositivos a um Usuario:
+
+
+
+
+//Setar Departamento a um Usuario:
+
+
 //Buscar Departamento do Usuario:
     @GetMapping("/{usuarioId}/departamento")
     public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId){
@@ -84,4 +84,6 @@ public class UsuarioController {
         return this.usuarioService.buscarDepartamentoDoUsuario(usuarioId)
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
+
 }

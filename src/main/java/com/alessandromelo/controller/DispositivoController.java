@@ -16,12 +16,10 @@ public class DispositivoController {
     private DispositivoService dispositivoService;
 
 
-    public DispositivoController() {
-    }
-
     public DispositivoController(DispositivoService dispositivoService) {
         this.dispositivoService = dispositivoService;
     }
+
 
 //Listar todos os Dispositivos:
     @GetMapping
@@ -46,7 +44,7 @@ public class DispositivoController {
     }
 
 //Atualizar Dispositivo:
-    @PutMapping("/{dispositivoId")
+    @PutMapping("/{dispositivoId}")
     public ResponseEntity<Dispositivo> atualizarDispositivo(@PathVariable Long dispositivoId,
                                                             @RequestBody Dispositivo atualizado){
 
