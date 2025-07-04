@@ -1,4 +1,7 @@
-1- Nas Classes Services, sendo mais preciso nas operações de atualizações, procurar melhorar
+1- Nas Classes Services, nas operações de atualizações, procurar melhorar
 a questão dos campos nulos
 
 2- Na operação de DELETAR no Controller, deve ser feito um tratamento de excessoes caso o usuario não exista
+
+
+3- Tratar os casos de tentativa de duplicação de campos (atributos) unicos

@@ -11,10 +11,17 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
+    @Column(unique = true)
     private String email;
+
+    @Column(unique = true)
     private String matricula;
+
     private String cargo;
+
     private Boolean ativo; //indica se o usuario está ativo no sistema
 
     @OneToMany(mappedBy = "usuario")

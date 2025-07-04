@@ -32,8 +32,8 @@ public class UsuarioController {
 //Buscar Usuario por Id:
     @GetMapping("/{usuarioId}")
     public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long usuarioId){
-        return this.usuarioService.buscarUsuarioPorId(usuarioId)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(this.usuarioService.buscarUsuarioPorId(usuarioId));
+
     }
 
 //Cadastrar novo Usuario:
@@ -45,11 +45,9 @@ public class UsuarioController {
 
 //Atualizar Usuario:
     @PutMapping("/{usuarioId}")
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long usuarioId,
-                                                    @RequestBody Usuario atualizado){
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long usuarioId, @RequestBody Usuario atualizado){
+        return ResponseEntity.ok(this.usuarioService.atualizarUsuario(usuarioId, atualizado));
 
-        return this.usuarioService.atualizarUsuario(usuarioId, atualizado)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
 
@@ -64,9 +62,7 @@ public class UsuarioController {
 //Listar Dispositivos cadastrados em um determinado Usuario:
     @GetMapping("/{usuarioId}/dispositivos")
     public ResponseEntity<List<Dispositivo>> listarDispositivosCadastradosEmUmUsuario(@PathVariable Long usuarioId){
-
-        return this.usuarioService.listarDispositivosCadastradosEmUmUsuario(usuarioId).
-                map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(this.usuarioService.listarDispositivosCadastradosEmUmUsuario(usuarioId));
     }
 
 //Setar Dispositivos a um Usuario:
@@ -79,11 +75,8 @@ public class UsuarioController {
 
 //Buscar Departamento do Usuario:
     @GetMapping("/{usuarioId}/departamento")
-    public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId){
+    public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(this.usuarioService.buscarDepartamentoDoUsuario(usuarioId));
 
-        return this.usuarioService.buscarDepartamentoDoUsuario(usuarioId)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
-
-
 }

@@ -8,14 +8,24 @@ public class Dispositivo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String modelo;
+
     private String marca;
+
+    @Column(unique = true)
     private String numeroSerie;
+
     private String sistemaOperacional;
+
     private String versaoSO;
+
     private String status; //enum (ATIVO, INATIVO, EM_MANUTENCAO, PERDIDO, BLOQUEADO)
+
     private String dataAquisicao;
+
     private String dataUltimaAtualizacao;
+
     private String observacoes;
 
     @ManyToOne

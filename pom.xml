@@ -55,7 +55,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-
         <!-- Banco de dados H2-->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -69,4 +68,5 @@
 
         </plugins>
     </build>
+
 </project>

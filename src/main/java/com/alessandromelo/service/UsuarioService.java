@@ -6,9 +6,9 @@ import com.alessandromelo.model.Usuario;
 import com.alessandromelo.repository.DepartamentoRepository;
 import com.alessandromelo.repository.DispositivoRepository;
 import com.alessandromelo.repository.UsuarioRepository;
-import com.alessandromelo.service.exception.departamento.DepartamentoNaoEncontradoException;
-import com.alessandromelo.service.exception.dispositivo.DispositivoNaoEncontradoException;
-import com.alessandromelo.service.exception.usuario.UsuarioNaoEncontradoException;
+import com.alessandromelo.exception.departamento.DepartamentoNaoEncontradoException;
+import com.alessandromelo.exception.dispositivo.DispositivoNaoEncontradoException;
+import com.alessandromelo.exception.usuario.UsuarioNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,9 +35,10 @@ public class UsuarioService {
         return this.usuarioRepository.findAll();
     }
 
-//Buscar Usuario por id: (CERTO)
-    public Optional<Usuario> buscarUsuarioPorId(Long usuarioId){
-        return this.usuarioRepository.findById(usuarioId);
+//Buscar Usuario por id: (Modificado, agora lança uma exception)
+    public Usuario buscarUsuarioPorId(Long usuarioId){
+        return this.usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
 
 //Cadastrar Usuario: (CERTO)
@@ -45,8 +46,9 @@ public class UsuarioService {
         return this.usuarioRepository.save(novoUsuario);
     }
 
+//(Modificado, agora lança uma exception caso o usuario não seja encontrado
 //Atualizar Usuario: (Está correto porem futuramente deve ser corrigido o problema dos possiveis campos nulos)
-    public Optional<Usuario> atualizarUsuario(Long usuarioId, Usuario atualizado){
+    public Usuario atualizarUsuario(Long usuarioId, Usuario atualizado){
 
         return this.usuarioRepository.findById(usuarioId)
                 .map(usuario -> {
@@ -58,7 +60,7 @@ public class UsuarioService {
                     usuario.setDispositivos(atualizado.getDispositivos());
                     usuario.setAtivo(atualizado.getAtivo());
                     return this.usuarioRepository.save(usuario);
-                } );
+                } ).orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
 
 //Remover Usuario:
@@ -67,17 +69,18 @@ public class UsuarioService {
     }
 
 //Listar Dispositivos cadastrados em um determinado Usuario   (CERTO)
-    public Optional<List<Dispositivo>> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
-        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDispositivos);
+    public List<Dispositivo> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
+        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDispositivos)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
 
 //Setar Dispositivos a um Usuario:
     public Dispositivo vincularDispositivoExistenteEmUmUsuarioExistente(Long usuarioId, Long dispositivoId){
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
-                .orElseThrow(()-> new UsuarioNaoEncontradoException("Usuário com o id " + usuarioId + " não encontrado!"));
+                .orElseThrow(()-> new UsuarioNaoEncontradoException(usuarioId));
 
         Dispositivo dispositivo = this.dispositivoRepository.findById(dispositivoId)
-                .orElseThrow(() -> new DispositivoNaoEncontradoException("Dispositivo com o id " + dispositivoId + " não encontrado!"));
+                .orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
 
         dispositivo.setUsuario(usuario);
         return this.dispositivoRepository.save(dispositivo);
@@ -89,10 +92,10 @@ public class UsuarioService {
     public Usuario vincularDepartamentoExistenteEmUmUsuarioExistente(Long usuarioId, Long departamentoId){
 
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com o id " + usuarioId + " não encontrado!"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
 
         Departamento departamento = this.departamentoRepository.findById(departamentoId)
-                .orElseThrow(() -> new DepartamentoNaoEncontradoException("Departamento com o id " + departamentoId + " não encontrado!"));
+                .orElseThrow(() -> new DepartamentoNaoEncontradoException(departamentoId));
 
         usuario.setDepartamento(departamento);
 
@@ -101,8 +104,9 @@ public class UsuarioService {
 
 
 //Buscar Departamento do Usuario (CERTO)
-    public Optional<Departamento> buscarDepartamentoDoUsuario(Long usuarioId){
-        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDepartamento);
+    public Departamento buscarDepartamentoDoUsuario(Long usuarioId){
+        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDepartamento)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
 
 
