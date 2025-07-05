@@ -1,5 +1,6 @@
 package com.alessandromelo.service;
 
+import com.alessandromelo.exception.departamento.DepartamentoNaoEncontradoException;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.repository.DepartamentoRepository;
@@ -27,8 +28,9 @@ public class DepartamentoService {
     }
 
     //Buscar Departamento por Id:
-    public Optional<Departamento> buscarDepartamentoPorId(Long departamentoId){
-        return this.departamentoRepository.findById(departamentoId);
+    public Departamento buscarDepartamentoPorId(Long departamentoId){
+        return this.departamentoRepository.findById(departamentoId)
+                .orElseThrow(() -> new DepartamentoNaoEncontradoException(departamentoId));
     }
 
     //Criar Departamento: (CERTO)
@@ -37,7 +39,7 @@ public class DepartamentoService {
     }
 
     //Atualizar Departamento: (CONSERTAR O PROBLEMA DE CAMPOS NULOS)
-    public Optional<Departamento> atualizarDepartamento(Long departamentoId, Departamento atualizado){
+    public Departamento atualizarDepartamento(Long departamentoId, Departamento atualizado){
 
         return this.departamentoRepository.findById(departamentoId)
                 .map(departamento -> {
@@ -45,7 +47,7 @@ public class DepartamentoService {
                     departamento.setSigla(atualizado.getSigla());
                     departamento.setUsuarios(atualizado.getUsuarios());
                     return this.departamentoRepository.save(departamento);
-                });
+                }).orElseThrow(() -> new DepartamentoNaoEncontradoException(departamentoId));
     }
 
     //Remover Departamento: (CERTO)
@@ -54,8 +56,9 @@ public class DepartamentoService {
     }
 
     //Listar Usuarios que pertencem ao Departamento: (CERTO)
-    public Optional<List<Usuario>> listarUsuariosDoDepartamento(Long departamentoId){
-        return this.departamentoRepository.findById(departamentoId).map(Departamento::getUsuarios);
+    public List<Usuario> listarUsuariosDoDepartamento(Long departamentoId){
+        return this.departamentoRepository.findById(departamentoId).map(Departamento::getUsuarios)
+                .orElseThrow(() -> new DepartamentoNaoEncontradoException(departamentoId));
     }
 
 }

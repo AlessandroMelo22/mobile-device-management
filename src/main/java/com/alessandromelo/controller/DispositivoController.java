@@ -30,9 +30,7 @@ public class DispositivoController {
 //Buscar dispositivo por Id:
     @GetMapping("/{dispositivoId}")
     public ResponseEntity<Dispositivo> buscarDispositivoPorId(@PathVariable Long dispositivoId){
-
-        return this.dispositivoService.buscarDispositivoPorId(dispositivoId)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(this.dispositivoService.buscarDispositivoPorId(dispositivoId));
     }
 
 //Cadastrar Dispositivo:
@@ -48,9 +46,7 @@ public class DispositivoController {
     public ResponseEntity<Dispositivo> atualizarDispositivo(@PathVariable Long dispositivoId,
                                                             @RequestBody Dispositivo atualizado){
 
-        return this.dispositivoService.atualizarDispositivo(dispositivoId,atualizado)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-
+        return ResponseEntity.ok(this.dispositivoService.atualizarDispositivo(dispositivoId, atualizado));
     }
 
 //Remover Dispositivo por id:
@@ -64,9 +60,7 @@ public class DispositivoController {
 //Buscar Usuario que está cadastrado no dispositivo:
     @GetMapping("/{dispositivoId}/usuarios")
     public ResponseEntity<Usuario> buscarUsuarioCadastradoNoDispositivo(@PathVariable Long dispositivoId){
-
-        return this.dispositivoService.buscarUsuarioCadastradoNoDispositivo(dispositivoId)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(this.dispositivoService.buscarUsuarioCadastradoNoDispositivo(dispositivoId));
     }
 
 }

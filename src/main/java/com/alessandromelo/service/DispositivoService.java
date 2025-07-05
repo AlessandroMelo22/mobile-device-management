@@ -1,5 +1,6 @@
 package com.alessandromelo.service;
 
+import com.alessandromelo.exception.dispositivo.DispositivoNaoEncontradoException;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.repository.DispositivoRepository;
@@ -27,8 +28,9 @@ public class DispositivoService {
     }
 
     //Buscar Dispositivo por Id: (CERTO)
-    public Optional<Dispositivo> buscarDispositivoPorId(Long dispositivoId){
-        return this.dispositivoRepository.findById(dispositivoId);
+    public Dispositivo buscarDispositivoPorId(Long dispositivoId){
+        return this.dispositivoRepository.findById(dispositivoId)
+                .orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
     }
 
     //Cadastrar Dispositivo: (CERTO)
@@ -37,7 +39,7 @@ public class DispositivoService {
     }
 
     //Atualizar Dispositivo: (CONSERTAR O PROBLEMA DE CAMPOS NULOS)
-    public Optional<Dispositivo> atualizarDispositivo(Long dispositivoId, Dispositivo atualizado){
+    public Dispositivo atualizarDispositivo(Long dispositivoId, Dispositivo atualizado){
 
        return this.dispositivoRepository.findById(dispositivoId)
                .map(dispositivo -> {
@@ -52,7 +54,7 @@ public class DispositivoService {
                    dispositivo.setObservacoes(atualizado.getObservacoes());
                    dispositivo.setStatus(atualizado.getStatus());
                    return this.dispositivoRepository.save(dispositivo);
-               });
+               }).orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
     }
 
     //Remover Dispositivo: (CERTO)
@@ -62,9 +64,10 @@ public class DispositivoService {
 
 
     //Buscar Usuario cadastrado em um determinado Dispositivo: (CERTO)
-    public Optional<Usuario> buscarUsuarioCadastradoNoDispositivo(Long dispositivoId){
+    public Usuario buscarUsuarioCadastradoNoDispositivo(Long dispositivoId){
         return this.dispositivoRepository.findById(dispositivoId)
-                .map(Dispositivo::getUsuario);
+                .map(Dispositivo::getUsuario)
+                .orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
     }
 
 }

@@ -31,9 +31,7 @@ public class DepartamentoController {
 //Buscar Departamento por id: (CERTO)
     @GetMapping("/{departamentoId}")
     public ResponseEntity<Departamento> buscarDepartamentoPorId(@PathVariable Long departamentoId){
-
-        return this.departamentoService.buscarDepartamentoPorId(departamentoId)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(this.departamentoService.buscarDepartamentoPorId(departamentoId));
     }
 
 //Cadastrar novo Departamento: (CERTO)
@@ -47,9 +45,7 @@ public class DepartamentoController {
 //Atualizar Departamento:
     @PutMapping("/{departamentoId}")
     public ResponseEntity<Departamento> atualizarDepartamento(@PathVariable Long departamentoId, Departamento atualizado){
-
-        return this.departamentoService.atualizarDepartamento(departamentoId,atualizado)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(this.departamentoService.atualizarDepartamento(departamentoId, atualizado));
     }
 
 //Remover Departamento por id:
@@ -63,8 +59,6 @@ public class DepartamentoController {
 //Listar Usuarios que pertencem a um Departamento:
     @GetMapping("/{departamentoId}/usuarios")
     public ResponseEntity<List<Usuario>> listarUsuariosDoDepartamento(@PathVariable Long departamentoId){
-
-        return this.departamentoService.listarUsuariosDoDepartamento(departamentoId)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(this.departamentoService.listarUsuariosDoDepartamento(departamentoId));
     }
 }
