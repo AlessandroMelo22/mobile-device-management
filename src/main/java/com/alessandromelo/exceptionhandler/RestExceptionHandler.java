@@ -6,14 +6,13 @@ import com.alessandromelo.exception.departamento.NomeJaCadastradoException;
 import com.alessandromelo.exception.departamento.SiglaJaCadastradaException;
 import com.alessandromelo.exception.dispositivo.DispositivoNaoEncontradoException;
 import com.alessandromelo.exception.dispositivo.NumeroDeSerieJaCadastradoException;
-import com.alessandromelo.exception.usuario.CpfJaCadastradoException;
 import com.alessandromelo.exception.usuario.EmailJaCadastradoException;
+import com.alessandromelo.exception.usuario.MatriculaJaCadastradaException;
 import com.alessandromelo.exception.usuario.UsuarioNaoEncontradoException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
@@ -37,13 +36,14 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    @ExceptionHandler(CpfJaCadastradoException.class)
-    public ResponseEntity<ApiError> handleCpfJaCadastradoException (CpfJaCadastradoException ex,
-                                                                    HttpServletRequest request){
+    @ExceptionHandler(MatriculaJaCadastradaException.class)
+    public ResponseEntity<ApiError> handleMatriculaJaCadastradaException (MatriculaJaCadastradaException ex,
+                                                                      HttpServletRequest request){
         //400
         ApiError error = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
 
 ////////DISPOSITIVO:
 

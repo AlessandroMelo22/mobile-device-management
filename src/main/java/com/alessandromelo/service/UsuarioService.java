@@ -1,5 +1,7 @@
 package com.alessandromelo.service;
 
+import com.alessandromelo.exception.usuario.EmailJaCadastradoException;
+import com.alessandromelo.exception.usuario.MatriculaJaCadastradaException;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
@@ -43,15 +45,35 @@ public class UsuarioService {
 
 //Cadastrar Usuario: (CERTO)
     public Usuario cadastrarNovoUsuario(Usuario novoUsuario){
+
+        boolean emailJaExiste = this.usuarioRepository.existsByEmail(novoUsuario.getEmail());
+        boolean matriculaJaExiste = this.usuarioRepository.existsByMatricula(novoUsuario.getMatricula());
+
+        if (emailJaExiste){
+            throw new EmailJaCadastradoException();
+        } else if(matriculaJaExiste){
+            throw new MatriculaJaCadastradaException();
+        }
+
         return this.usuarioRepository.save(novoUsuario);
     }
 
-//(Modificado, agora lança uma exception caso o usuario não seja encontrado
+
 //Atualizar Usuario: (Está correto porem futuramente deve ser corrigido o problema dos possiveis campos nulos)
     public Usuario atualizarUsuario(Long usuarioId, Usuario atualizado){
 
         return this.usuarioRepository.findById(usuarioId)
                 .map(usuario -> {
+
+                    boolean emailJaExiste = this.usuarioRepository.existsByEmailAndIdNot(atualizado.getEmail(),usuarioId);
+                    boolean matriculaJaExiste = this.usuarioRepository.existsByMatriculaAndIdNot(atualizado.getMatricula(),usuarioId);
+
+                    if(emailJaExiste){
+                        throw new EmailJaCadastradoException();
+                    }else if(matriculaJaExiste){
+                        throw new MatriculaJaCadastradaException();
+                    }
+
                     usuario.setNome(atualizado.getNome());
                     usuario.setCargo(atualizado.getCargo());
                     usuario.setDepartamento(atualizado.getDepartamento());
@@ -60,6 +82,7 @@ public class UsuarioService {
                     usuario.setDispositivos(atualizado.getDispositivos());
                     usuario.setAtivo(atualizado.getAtivo());
                     return this.usuarioRepository.save(usuario);
+
                 } ).orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
 
@@ -75,7 +98,7 @@ public class UsuarioService {
     }
 
 //Setar Dispositivos a um Usuario:
-    public Dispositivo vincularDispositivoExistenteEmUmUsuarioExistente(Long usuarioId, Long dispositivoId){
+    public Usuario vincularDispositivoAoUsuario(Long usuarioId, Long dispositivoId){
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
                 .orElseThrow(()-> new UsuarioNaoEncontradoException(usuarioId));
 
@@ -83,13 +106,13 @@ public class UsuarioService {
                 .orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
 
         dispositivo.setUsuario(usuario);
-        return this.dispositivoRepository.save(dispositivo);
-
+        this.dispositivoRepository.save(dispositivo);
+        return usuario;
     }
 
 
 //Setar Departamento a um Usuario:
-    public Usuario vincularDepartamentoExistenteEmUmUsuarioExistente(Long usuarioId, Long departamentoId){
+    public Usuario vincularUsuarioAoDepartamento(Long usuarioId, Long departamentoId){
 
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));

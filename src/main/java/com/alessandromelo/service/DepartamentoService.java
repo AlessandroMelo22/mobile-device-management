@@ -1,6 +1,8 @@
 package com.alessandromelo.service;
 
 import com.alessandromelo.exception.departamento.DepartamentoNaoEncontradoException;
+import com.alessandromelo.exception.departamento.NomeJaCadastradoException;
+import com.alessandromelo.exception.departamento.SiglaJaCadastradaException;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.repository.DepartamentoRepository;
@@ -35,6 +37,17 @@ public class DepartamentoService {
 
     //Criar Departamento: (CERTO)
     public Departamento criarNovoDepartamento(Departamento novoDepartamento){
+
+        Boolean nomeJaExiste = this.departamentoRepository.existsByNome(novoDepartamento.getNome());
+        Boolean siglaJaExiste = this.departamentoRepository.existsBySigla(novoDepartamento.getSigla());
+
+        if(nomeJaExiste){
+            throw new NomeJaCadastradoException();
+
+        } else if (siglaJaExiste) {
+            throw new SiglaJaCadastradaException();
+
+        }
         return this.departamentoRepository.save(novoDepartamento);
     }
 
@@ -43,10 +56,22 @@ public class DepartamentoService {
 
         return this.departamentoRepository.findById(departamentoId)
                 .map(departamento -> {
+
+                    boolean nomeJaExiste = this.departamentoRepository.existsByNomeAndIdNot(atualizado.getNome(), departamentoId);
+                    boolean siglaJaExiste = this.departamentoRepository.existsBySiglaAndIdNot(atualizado.getSigla(), departamentoId);
+
+                    if (nomeJaExiste){
+                        throw new NomeJaCadastradoException();
+
+                    } else if (siglaJaExiste) {
+                        throw new SiglaJaCadastradaException();
+                    }
+
                     departamento.setNome(atualizado.getNome());
                     departamento.setSigla(atualizado.getSigla());
                     departamento.setUsuarios(atualizado.getUsuarios());
                     return this.departamentoRepository.save(departamento);
+
                 }).orElseThrow(() -> new DepartamentoNaoEncontradoException(departamentoId));
     }
 

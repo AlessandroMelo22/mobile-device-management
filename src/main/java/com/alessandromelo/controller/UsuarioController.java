@@ -65,13 +65,20 @@ public class UsuarioController {
         return ResponseEntity.ok(this.usuarioService.listarDispositivosCadastradosEmUmUsuario(usuarioId));
     }
 
-//Setar Dispositivos a um Usuario:
+//Setar Dispositivo a um Usuario:
+
+    @PutMapping("/{usuarioId}/dispositivos/{dispositivoId}")
+    public ResponseEntity<Usuario> vincularDispositivoAoUsuario(@PathVariable Long usuarioId, @PathVariable Long dispositivoId){
+        return ResponseEntity.ok(this.usuarioService.vincularDispositivoAoUsuario(usuarioId,dispositivoId));
+    }
 
 
+//Setar Usuario a um Departamento:
 
-
-//Setar Departamento a um Usuario:
-
+    @PutMapping("/{usuarioId}/departamentos/{departamentoId}")
+    public ResponseEntity<Usuario> vincularUsuarioAoDepartamento(@PathVariable Long usuarioId, @PathVariable Long departamentoId){
+        return ResponseEntity.ok(this.usuarioService.vincularUsuarioAoDepartamento(usuarioId, departamentoId));
+    }
 
 //Buscar Departamento do Usuario:
     @GetMapping("/{usuarioId}/departamento")

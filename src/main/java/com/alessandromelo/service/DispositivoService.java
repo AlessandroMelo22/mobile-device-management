@@ -1,6 +1,7 @@
 package com.alessandromelo.service;
 
 import com.alessandromelo.exception.dispositivo.DispositivoNaoEncontradoException;
+import com.alessandromelo.exception.dispositivo.NumeroDeSerieJaCadastradoException;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.repository.DispositivoRepository;
@@ -35,6 +36,13 @@ public class DispositivoService {
 
     //Cadastrar Dispositivo: (CERTO)
     public Dispositivo cadastrarNovoDispositivo(Dispositivo novoDispositivo){
+
+        boolean numeroSerieExistente = this.dispositivoRepository.existsByNumeroSerie(novoDispositivo.getNumeroSerie());
+
+        if(numeroSerieExistente){
+
+            throw new NumeroDeSerieJaCadastradoException();
+        }
         return this.dispositivoRepository.save(novoDispositivo);
     }
 
@@ -43,6 +51,14 @@ public class DispositivoService {
 
        return this.dispositivoRepository.findById(dispositivoId)
                .map(dispositivo -> {
+
+                   boolean numeroSerieExistente = this.dispositivoRepository.existsByNumeroSerieAndIdNot(atualizado.getNumeroSerie(), dispositivoId);
+
+                   if (numeroSerieExistente){
+
+                       throw new NumeroDeSerieJaCadastradoException();
+                   }
+
                    dispositivo.setModelo(atualizado.getModelo());
                    dispositivo.setMarca(atualizado.getMarca());
                    dispositivo.setNumeroSerie(atualizado.getNumeroSerie());
@@ -54,6 +70,7 @@ public class DispositivoService {
                    dispositivo.setObservacoes(atualizado.getObservacoes());
                    dispositivo.setStatus(atualizado.getStatus());
                    return this.dispositivoRepository.save(dispositivo);
+
                }).orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
     }
 
