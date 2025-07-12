@@ -1,4 +1,4 @@
 package com.alessandromelo.dto.departamento;
 
-public class DepartamentoUpdateDTO {
+public class DepartamentoDTO {
 }

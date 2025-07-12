@@ -1,10 +1,7 @@
 package com.alessandromelo.dto.dispositivo;
 
-import com.alessandromelo.dto.usuario.UsuarioDTO;
+public class DispositivoRequestDTO {
 
-public class DispositivoResponseDTO {
-
-    private Long id;
     private String modelo;
     private String marca;
     private String numeroSerie;
@@ -12,16 +9,15 @@ public class DispositivoResponseDTO {
     private String versãoSO;
     private String status;
     private String dataAquisicao;
-    private String dataUltimaAtualizacao;
     private String observacoes;
-    private UsuarioDTO usuarioDTO;
+
+    private Long usuarioId; //(FK)
 
 
-    public DispositivoResponseDTO() {
+    public DispositivoRequestDTO() {
     }
 
-    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versãoSO, String status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioDTO usuarioDTO) {
-        this.id = id;
+    public DispositivoRequestDTO(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versãoSO, String status, String dataAquisicao, String observacoes, Long usuarioId) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
@@ -29,19 +25,10 @@ public class DispositivoResponseDTO {
         this.versãoSO = versãoSO;
         this.status = status;
         this.dataAquisicao = dataAquisicao;
-        this.dataUltimaAtualizacao = dataUltimaAtualizacao;
         this.observacoes = observacoes;
-        this.usuarioDTO = usuarioDTO;
+        this.usuarioId = usuarioId;
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getModelo() {
         return modelo;
@@ -99,14 +86,6 @@ public class DispositivoResponseDTO {
         this.dataAquisicao = dataAquisicao;
     }
 
-    public String getDataUltimaAtualizacao() {
-        return dataUltimaAtualizacao;
-    }
-
-    public void setDataUltimaAtualizacao(String dataUltimaAtualizacao) {
-        this.dataUltimaAtualizacao = dataUltimaAtualizacao;
-    }
-
     public String getObservacoes() {
         return observacoes;
     }
@@ -115,11 +94,11 @@ public class DispositivoResponseDTO {
         this.observacoes = observacoes;
     }
 
-    public UsuarioDTO getUsuarioDTO() {
-        return usuarioDTO;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
-        this.usuarioDTO = usuarioDTO;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

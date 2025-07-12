@@ -1,28 +1,17 @@
 package com.alessandromelo.dto.departamento;
 
-public class DepartamentoResponseDTO {
+public class DepartamentoRequestDTO {
 
-    private Long id;
     private String nome;
     private String sigla;
 
 
-    public DepartamentoResponseDTO() {
+    public DepartamentoRequestDTO() {
     }
 
-    public DepartamentoResponseDTO(Long id, String nome, String sigla) {
-        this.id = id;
+    public DepartamentoRequestDTO(String nome, String sigla) {
         this.nome = nome;
         this.sigla = sigla;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
