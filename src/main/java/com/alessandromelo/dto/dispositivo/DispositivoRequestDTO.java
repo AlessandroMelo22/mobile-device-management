@@ -6,9 +6,10 @@ public class DispositivoRequestDTO {
     private String marca;
     private String numeroSerie;
     private String sistemaOperacional;
-    private String versãoSO;
+    private String versaoSO;
     private String status;
     private String dataAquisicao;
+    private String dataUltimaAtualizacao;
     private String observacoes;
 
     private Long usuarioId; //(FK)
@@ -17,14 +18,15 @@ public class DispositivoRequestDTO {
     public DispositivoRequestDTO() {
     }
 
-    public DispositivoRequestDTO(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versãoSO, String status, String dataAquisicao, String observacoes, Long usuarioId) {
+    public DispositivoRequestDTO(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, String dataAquisicao, String dataUltimaAtualizacao,String observacoes, Long usuarioId) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
         this.sistemaOperacional = sistemaOperacional;
-        this.versãoSO = versãoSO;
+        this.versaoSO = versaoSO;
         this.status = status;
         this.dataAquisicao = dataAquisicao;
+        this.dataUltimaAtualizacao = dataUltimaAtualizacao;
         this.observacoes = observacoes;
         this.usuarioId = usuarioId;
     }
@@ -62,12 +64,12 @@ public class DispositivoRequestDTO {
         this.sistemaOperacional = sistemaOperacional;
     }
 
-    public String getVersãoSO() {
-        return versãoSO;
+    public String getVersaoSO() {
+        return versaoSO;
     }
 
-    public void setVersãoSO(String versãoSO) {
-        this.versãoSO = versãoSO;
+    public void setVersaoSO(String versaoSO) {
+        this.versaoSO = versaoSO;
     }
 
     public String getStatus() {
@@ -84,6 +86,14 @@ public class DispositivoRequestDTO {
 
     public void setDataAquisicao(String dataAquisicao) {
         this.dataAquisicao = dataAquisicao;
+    }
+
+    public String getDataUltimaAtualizacao() {
+        return dataUltimaAtualizacao;
+    }
+
+    public void setDataUltimaAtualizacao(String dataUltimaAtualizacao) {
+        this.dataUltimaAtualizacao = dataUltimaAtualizacao;
     }
 
     public String getObservacoes() {

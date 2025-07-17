@@ -1,7 +1,15 @@
 package com.alessandromelo.service;
 
+import com.alessandromelo.dto.dispositivo.DispositivoResumoDTO;
+import com.alessandromelo.dto.usuario.UsuarioDepartamentoResponseDTO;
+import com.alessandromelo.dto.usuario.UsuarioDispositivoResponseDTO;
+import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
+import com.alessandromelo.dto.usuario.UsuarioResponseDTO;
 import com.alessandromelo.exception.usuario.EmailJaCadastradoException;
 import com.alessandromelo.exception.usuario.MatriculaJaCadastradaException;
+import com.alessandromelo.mapper.DepartamentoMapper;
+import com.alessandromelo.mapper.DispositivoMapper;
+import com.alessandromelo.mapper.UsuarioMapper;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
@@ -14,7 +22,6 @@ import com.alessandromelo.exception.usuario.UsuarioNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -23,50 +30,88 @@ public class UsuarioService {
     private DepartamentoRepository departamentoRepository;
     private DispositivoRepository dispositivoRepository;
 
+    private UsuarioMapper usuarioMapper;
+    private DispositivoMapper dispositivoMapper;
+    private DepartamentoMapper departamentoMapper;
+
 
     public UsuarioService(UsuarioRepository usuarioRepository, DepartamentoRepository departamentoRepository,
-                          DispositivoRepository dispositivoRepository) {
+                          DispositivoRepository dispositivoRepository, UsuarioMapper usuarioMapper,
+                          DispositivoMapper dispositivoMapper, DepartamentoMapper departamentoMapper) {
 
         this.usuarioRepository = usuarioRepository;
         this.departamentoRepository = departamentoRepository;
         this.dispositivoRepository = dispositivoRepository;
+        this.usuarioMapper = usuarioMapper;
+        this.dispositivoMapper = dispositivoMapper;
+        this.departamentoMapper = departamentoMapper;
     }
 
-    //Listar todos os usuarios: (CERTO)
-    public List<Usuario> listarUsuarios(){
-        return this.usuarioRepository.findAll();
+
+
+
+
+
+    //Listar todos os usuarios:
+    public List<UsuarioResponseDTO> listarUsuarios(){
+
+        List<Usuario> usuarios = this.usuarioRepository.findAll();
+        return usuarios.stream().map(usuarioMapper::toResponseDTO).toList();
     }
 
 //Buscar Usuario por id: (Modificado, agora lança uma exception)
-    public Usuario buscarUsuarioPorId(Long usuarioId){
-        return this.usuarioRepository.findById(usuarioId)
+    public UsuarioResponseDTO buscarUsuarioPorId(Long usuarioId){
+
+        Usuario usuario = this.usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
+
+        return usuarioMapper.toResponseDTO(usuario);
     }
 
-//Cadastrar Usuario: (CERTO)
-    public Usuario cadastrarNovoUsuario(Usuario novoUsuario){
+    /*
 
-        boolean emailJaExiste = this.usuarioRepository.existsByEmail(novoUsuario.getEmail());
-        boolean matriculaJaExiste = this.usuarioRepository.existsByMatricula(novoUsuario.getMatricula());
+cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
+
+    1- Faço uma verificação para ver se há dados duplicados
+
+    2- Realizo mapeamento do RequestDTO recebido para uma entidade Usuario
+
+    3- Busco no banco o departamento pelo Id que é informado no UsuarioRequestDTO
+
+    4- Depois de buscar eu setto o departamento dentro da entidade Usuario
+
+     */
+
+    public UsuarioResponseDTO cadastrarNovoUsuario(UsuarioRequestDTO novoUsuarioDTO){
+        //1
+        boolean emailJaExiste = this.usuarioRepository.existsByEmail(novoUsuarioDTO.getEmail());
+        boolean matriculaJaExiste = this.usuarioRepository.existsByMatricula(novoUsuarioDTO.getMatricula());
 
         if (emailJaExiste){
             throw new EmailJaCadastradoException();
         } else if(matriculaJaExiste){
             throw new MatriculaJaCadastradaException();
         }
+        //2
+        Usuario usuario = usuarioMapper.toEntity(novoUsuarioDTO);
+        //3
+        Departamento departamento = this.departamentoRepository.findById(novoUsuarioDTO.getDepartamentoId())
+                .orElseThrow(() -> new DepartamentoNaoEncontradoException(novoUsuarioDTO.getDepartamentoId()));
+        //4
+        usuario.setDepartamento(departamento);
 
-        return this.usuarioRepository.save(novoUsuario);
+        return usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
     }
 
 
 //Atualizar Usuario: (Está correto porem futuramente deve ser corrigido o problema dos possiveis campos nulos)
-    public Usuario atualizarUsuario(Long usuarioId, Usuario atualizado){
+    public UsuarioResponseDTO atualizarUsuario(Long usuarioId, UsuarioRequestDTO usuarioAtualizadoDTO){
 
         return this.usuarioRepository.findById(usuarioId)
                 .map(usuario -> {
 
-                    boolean emailJaExiste = this.usuarioRepository.existsByEmailAndIdNot(atualizado.getEmail(),usuarioId);
-                    boolean matriculaJaExiste = this.usuarioRepository.existsByMatriculaAndIdNot(atualizado.getMatricula(),usuarioId);
+                    boolean emailJaExiste = this.usuarioRepository.existsByEmailAndIdNot(usuarioAtualizadoDTO.getEmail(),usuarioId);
+                    boolean matriculaJaExiste = this.usuarioRepository.existsByMatriculaAndIdNot(usuarioAtualizadoDTO.getMatricula(),usuarioId);
 
                     if(emailJaExiste){
                         throw new EmailJaCadastradoException();
@@ -74,14 +119,18 @@ public class UsuarioService {
                         throw new MatriculaJaCadastradaException();
                     }
 
-                    usuario.setNome(atualizado.getNome());
-                    usuario.setCargo(atualizado.getCargo());
-                    usuario.setDepartamento(atualizado.getDepartamento());
-                    usuario.setMatricula(atualizado.getMatricula());
-                    usuario.setEmail(atualizado.getEmail());
-                    usuario.setDispositivos(atualizado.getDispositivos());
-                    usuario.setAtivo(atualizado.getAtivo());
-                    return this.usuarioRepository.save(usuario);
+                    usuario.setNome(usuarioAtualizadoDTO.getNome());
+                    usuario.setCargo(usuarioAtualizadoDTO.getCargo());
+                    usuario.setMatricula(usuarioAtualizadoDTO.getMatricula());
+                    usuario.setEmail(usuarioAtualizadoDTO.getEmail());
+                    usuario.setAtivo(usuarioAtualizadoDTO.getAtivo());
+
+                    Departamento departamento = this.departamentoRepository.findById(usuarioAtualizadoDTO.getDepartamentoId())
+                            .orElseThrow(() -> new DepartamentoNaoEncontradoException(usuarioAtualizadoDTO.getDepartamentoId()));
+
+                    usuario.setDepartamento(departamento);
+
+                    return usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
 
                 } ).orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
@@ -92,13 +141,17 @@ public class UsuarioService {
     }
 
 //Listar Dispositivos cadastrados em um determinado Usuario   (CERTO)
-    public List<Dispositivo> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
-        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDispositivos)
+    public List<DispositivoResumoDTO> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
+
+        List<Dispositivo> dispositivos = this.usuarioRepository.findById(usuarioId).map(Usuario::getDispositivos)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
+
+        return dispositivos.stream().map(dispositivoMapper::toResumoDTO).toList();
     }
 
 //Setar Dispositivos a um Usuario:
-    public Usuario vincularDispositivoAoUsuario(Long usuarioId, Long dispositivoId){
+    public UsuarioDispositivoResponseDTO vincularDispositivoAoUsuario(Long usuarioId, Long dispositivoId){
+
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
                 .orElseThrow(()-> new UsuarioNaoEncontradoException(usuarioId));
 
@@ -106,13 +159,15 @@ public class UsuarioService {
                 .orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
 
         dispositivo.setUsuario(usuario);
+
         this.dispositivoRepository.save(dispositivo);
-        return usuario;
+
+        return usuarioMapper.toUsuarioDispositivoResponseDTO(usuario, dispositivo);
     }
 
 
 //Setar Departamento a um Usuario:
-    public Usuario vincularUsuarioAoDepartamento(Long usuarioId, Long departamentoId){
+    public UsuarioDepartamentoResponseDTO vincularUsuarioAoDepartamento(Long usuarioId, Long departamentoId){
 
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
@@ -122,15 +177,18 @@ public class UsuarioService {
 
         usuario.setDepartamento(departamento);
 
-        return this.usuarioRepository.save(usuario);
+        this.usuarioRepository.save(usuario);
+
+        return usuarioMapper.toUsuarioDepartamentoResponseDTO(usuario, departamento);
     }
 
 
-//Buscar Departamento do Usuario (CERTO)
-    public Departamento buscarDepartamentoDoUsuario(Long usuarioId){
-        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDepartamento)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
-    }
+
+////Buscar Departamento do Usuario (CERTO)
+//    public Departamento buscarDepartamentoDoUsuario(Long usuarioId){
+//        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDepartamento)
+//                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
+//    }
 
 
 }

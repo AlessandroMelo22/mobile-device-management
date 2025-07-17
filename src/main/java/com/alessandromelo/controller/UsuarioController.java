@@ -1,5 +1,10 @@
 package com.alessandromelo.controller;
 
+import com.alessandromelo.dto.dispositivo.DispositivoResumoDTO;
+import com.alessandromelo.dto.usuario.UsuarioDepartamentoResponseDTO;
+import com.alessandromelo.dto.usuario.UsuarioDispositivoResponseDTO;
+import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
+import com.alessandromelo.dto.usuario.UsuarioResponseDTO;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
@@ -25,28 +30,28 @@ public class UsuarioController {
 
 //ListarUsuarios: CONSERTAR
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarUsuarios(){
+    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios(){
         return ResponseEntity.ok(this.usuarioService.listarUsuarios());
     }
 
 //Buscar Usuario por Id:
     @GetMapping("/{usuarioId}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long usuarioId){
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable Long usuarioId){
         return ResponseEntity.ok(this.usuarioService.buscarUsuarioPorId(usuarioId));
 
     }
 
 //Cadastrar novo Usuario:
     @PostMapping
-    public ResponseEntity<Usuario> cadastrarNovoUsuario(@RequestBody Usuario novoUsuario){
+    public ResponseEntity<UsuarioResponseDTO> cadastrarNovoUsuario(@RequestBody UsuarioRequestDTO novoUsuarioDTO){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(this.usuarioService.cadastrarNovoUsuario(novoUsuario));
+                .body(this.usuarioService.cadastrarNovoUsuario(novoUsuarioDTO));
     }
 
 //Atualizar Usuario:
     @PutMapping("/{usuarioId}")
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long usuarioId, @RequestBody Usuario atualizado){
-        return ResponseEntity.ok(this.usuarioService.atualizarUsuario(usuarioId, atualizado));
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long usuarioId, @RequestBody UsuarioRequestDTO usuarioAtualizadoDTO){
+        return ResponseEntity.ok(this.usuarioService.atualizarUsuario(usuarioId, usuarioAtualizadoDTO));
 
     }
 
@@ -59,31 +64,31 @@ public class UsuarioController {
         return ResponseEntity.noContent().build(); //204
     }
 
+
 //Listar Dispositivos cadastrados em um determinado Usuario:
     @GetMapping("/{usuarioId}/dispositivos")
-    public ResponseEntity<List<Dispositivo>> listarDispositivosCadastradosEmUmUsuario(@PathVariable Long usuarioId){
+    public ResponseEntity<List<DispositivoResumoDTO>> listarDispositivosCadastradosEmUmUsuario(@PathVariable Long usuarioId){
         return ResponseEntity.ok(this.usuarioService.listarDispositivosCadastradosEmUmUsuario(usuarioId));
     }
 
-//Setar Dispositivo a um Usuario:
 
+//Setar Dispositivo a um Usuario:
     @PutMapping("/{usuarioId}/dispositivos/{dispositivoId}")
-    public ResponseEntity<Usuario> vincularDispositivoAoUsuario(@PathVariable Long usuarioId, @PathVariable Long dispositivoId){
+    public ResponseEntity<UsuarioDispositivoResponseDTO> vincularDispositivoAoUsuario(@PathVariable Long usuarioId, @PathVariable Long dispositivoId){
         return ResponseEntity.ok(this.usuarioService.vincularDispositivoAoUsuario(usuarioId,dispositivoId));
     }
 
 
 //Setar Usuario a um Departamento:
-
     @PutMapping("/{usuarioId}/departamentos/{departamentoId}")
-    public ResponseEntity<Usuario> vincularUsuarioAoDepartamento(@PathVariable Long usuarioId, @PathVariable Long departamentoId){
+    public ResponseEntity<UsuarioDepartamentoResponseDTO> vincularUsuarioAoDepartamento(@PathVariable Long usuarioId, @PathVariable Long departamentoId){
         return ResponseEntity.ok(this.usuarioService.vincularUsuarioAoDepartamento(usuarioId, departamentoId));
     }
 
-//Buscar Departamento do Usuario:
-    @GetMapping("/{usuarioId}/departamento")
-    public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId) {
-        return ResponseEntity.ok(this.usuarioService.buscarDepartamentoDoUsuario(usuarioId));
-
-    }
+////Buscar Departamento do Usuario:
+//    @GetMapping("/{usuarioId}/departamento")
+//    public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId) {
+//        return ResponseEntity.ok(this.usuarioService.buscarDepartamentoDoUsuario(usuarioId));
+//
+//    }
 }

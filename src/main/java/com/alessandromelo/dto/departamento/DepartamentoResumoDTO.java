@@ -1,18 +1,18 @@
-package com.alessandromelo.dto.usuario;
+package com.alessandromelo.dto.departamento;
 
-public class UsuarioDTO {
+public class DepartamentoResumoDTO {
 
     private Long id;
     private String nome;
 
-    public UsuarioDTO() {
+
+    public DepartamentoResumoDTO() {
     }
 
-    public UsuarioDTO(Long id, String nome) {
+    public DepartamentoResumoDTO(Long id, String nome) {
         this.id = id;
         this.nome = nome;
     }
-
 
     public Long getId() {
         return id;

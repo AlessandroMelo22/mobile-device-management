@@ -1,6 +1,6 @@
 package com.alessandromelo.dto.dispositivo;
 
-import com.alessandromelo.dto.usuario.UsuarioDTO;
+import com.alessandromelo.dto.usuario.UsuarioResumoDTO;
 
 public class DispositivoResponseDTO {
 
@@ -9,29 +9,29 @@ public class DispositivoResponseDTO {
     private String marca;
     private String numeroSerie;
     private String sistemaOperacional;
-    private String versãoSO;
+    private String versaoSO;
     private String status;
     private String dataAquisicao;
     private String dataUltimaAtualizacao;
     private String observacoes;
-    private UsuarioDTO usuarioDTO;
+    private UsuarioResumoDTO usuarioResumoDTO; //(FK)
 
 
     public DispositivoResponseDTO() {
     }
 
-    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versãoSO, String status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioDTO usuarioDTO) {
+    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioResumoDTO usuarioResumoDTO) {
         this.id = id;
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
         this.sistemaOperacional = sistemaOperacional;
-        this.versãoSO = versãoSO;
+        this.versaoSO = versaoSO;
         this.status = status;
         this.dataAquisicao = dataAquisicao;
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
         this.observacoes = observacoes;
-        this.usuarioDTO = usuarioDTO;
+        this.usuarioResumoDTO = usuarioResumoDTO;
     }
 
 
@@ -75,12 +75,12 @@ public class DispositivoResponseDTO {
         this.sistemaOperacional = sistemaOperacional;
     }
 
-    public String getVersãoSO() {
-        return versãoSO;
+    public String getVersaoSO() {
+        return versaoSO;
     }
 
-    public void setVersãoSO(String versãoSO) {
-        this.versãoSO = versãoSO;
+    public void setVersaoSO(String versaoSO) {
+        this.versaoSO = versaoSO;
     }
 
     public String getStatus() {
@@ -115,11 +115,11 @@ public class DispositivoResponseDTO {
         this.observacoes = observacoes;
     }
 
-    public UsuarioDTO getUsuarioDTO() {
-        return usuarioDTO;
+    public UsuarioResumoDTO getUsuarioResumoDTO() {
+        return usuarioResumoDTO;
     }
 
-    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
-        this.usuarioDTO = usuarioDTO;
+    public void setUsuarioResumoDTO(UsuarioResumoDTO usuarioResumoDTO) {
+        this.usuarioResumoDTO = usuarioResumoDTO;
     }
 }

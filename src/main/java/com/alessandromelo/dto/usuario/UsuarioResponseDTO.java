@@ -1,9 +1,6 @@
 package com.alessandromelo.dto.usuario;
 
-import com.alessandromelo.dto.departamento.DepartamentoDTO;
-import com.alessandromelo.dto.dispositivo.DispositivoDTO;
-
-import java.util.List;
+import com.alessandromelo.dto.departamento.DepartamentoResumoDTO;
 
 public class UsuarioResponseDTO {
 
@@ -13,21 +10,21 @@ public class UsuarioResponseDTO {
     private String matricula;
     private String cargo;
     private Boolean ativo;
-    private DepartamentoDTO departamentoDTO;
-    private List<DispositivoDTO> dispositivoDTOs;
+    private DepartamentoResumoDTO departamentoResumoDTO; //(FK)
+
 
     public UsuarioResponseDTO() {
     }
 
-    public UsuarioResponseDTO(Long id, String nome, String email, String matricula, String cargo, Boolean ativo, DepartamentoDTO departamentoDTO, List<DispositivoDTO> dispositivoDTOs) {
+    public UsuarioResponseDTO(Long id, String nome, String email, String matricula, String cargo, Boolean ativo, DepartamentoResumoDTO departamentoDTO) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.matricula = matricula;
         this.cargo = cargo;
         this.ativo = ativo;
-        this.departamentoDTO = departamentoDTO;
-        this.dispositivoDTOs = dispositivoDTOs;
+        this.departamentoResumoDTO = departamentoDTO;
+
     }
 
     public Long getId() {
@@ -78,19 +75,13 @@ public class UsuarioResponseDTO {
         this.ativo = ativo;
     }
 
-    public DepartamentoDTO getDepartamentoDTO() {
-        return departamentoDTO;
+    public DepartamentoResumoDTO getDepartamentoResumoDTO() {
+        return departamentoResumoDTO;
     }
 
-    public void setDepartamentoDTO(DepartamentoDTO departamentoDTO) {
-        this.departamentoDTO = departamentoDTO;
+    public void setDepartamentoResumoDTO(DepartamentoResumoDTO departamentoResumoDTO) {
+        this.departamentoResumoDTO = UsuarioResponseDTO.this.departamentoResumoDTO;
     }
 
-    public List<DispositivoDTO> getDispositivoDTOs() {
-        return dispositivoDTOs;
-    }
 
-    public void setDispositivoDTOs(List<DispositivoDTO> dispositivoDTOs) {
-        this.dispositivoDTOs = dispositivoDTOs;
-    }
 }
