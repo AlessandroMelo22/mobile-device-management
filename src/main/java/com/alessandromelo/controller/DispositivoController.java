@@ -1,5 +1,7 @@
 package com.alessandromelo.controller;
 
+import com.alessandromelo.dto.dispositivo.DispositivoRequestDTO;
+import com.alessandromelo.dto.dispositivo.DispositivoResponseDTO;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.service.DispositivoService;
@@ -23,28 +25,28 @@ public class DispositivoController {
 
 //Listar todos os Dispositivos:
     @GetMapping
-    public ResponseEntity<List<Dispositivo>> listarTodosDispositivos(){
+    public ResponseEntity<List<DispositivoResponseDTO>> listarTodosDispositivos(){
         return ResponseEntity.ok(this.dispositivoService.listarTodosDispositivos());
     }
 
 //Buscar dispositivo por Id:
     @GetMapping("/{dispositivoId}")
-    public ResponseEntity<Dispositivo> buscarDispositivoPorId(@PathVariable Long dispositivoId){
+    public ResponseEntity<DispositivoResponseDTO> buscarDispositivoPorId(@PathVariable Long dispositivoId){
         return ResponseEntity.ok(this.dispositivoService.buscarDispositivoPorId(dispositivoId));
     }
 
 //Cadastrar Dispositivo:
     @PostMapping()
-    public ResponseEntity<Dispositivo> cadastrarNovoDispositivo(@RequestBody Dispositivo novoDispositivo){
+    public ResponseEntity<DispositivoResponseDTO> cadastrarNovoDispositivo(@RequestBody DispositivoRequestDTO novoDispositivoDTO){
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(this.dispositivoService.cadastrarNovoDispositivo(novoDispositivo));
+                .body(this.dispositivoService.cadastrarNovoDispositivo(novoDispositivoDTO));
     }
 
 //Atualizar Dispositivo:
     @PutMapping("/{dispositivoId}")
-    public ResponseEntity<Dispositivo> atualizarDispositivo(@PathVariable Long dispositivoId,
-                                                            @RequestBody Dispositivo atualizado){
+    public ResponseEntity<DispositivoResponseDTO> atualizarDispositivo(@PathVariable Long dispositivoId,
+                                                            @RequestBody DispositivoRequestDTO atualizado){
 
         return ResponseEntity.ok(this.dispositivoService.atualizarDispositivo(dispositivoId, atualizado));
     }
@@ -57,10 +59,10 @@ public class DispositivoController {
         return ResponseEntity.noContent().build(); //204
     }
 
-//Buscar Usuario que está cadastrado no dispositivo:
-    @GetMapping("/{dispositivoId}/usuarios")
-    public ResponseEntity<Usuario> buscarUsuarioCadastradoNoDispositivo(@PathVariable Long dispositivoId){
-        return ResponseEntity.ok(this.dispositivoService.buscarUsuarioCadastradoNoDispositivo(dispositivoId));
-    }
+////Buscar Usuario que está cadastrado no dispositivo:
+//    @GetMapping("/{dispositivoId}/usuarios")
+//    public ResponseEntity<Usuario> buscarUsuarioCadastradoNoDispositivo(@PathVariable Long dispositivoId){
+//        return ResponseEntity.ok(this.dispositivoService.buscarUsuarioCadastradoNoDispositivo(dispositivoId));
+//    }
 
 }

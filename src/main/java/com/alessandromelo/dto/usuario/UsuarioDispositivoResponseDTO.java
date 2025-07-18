@@ -1,23 +1,23 @@
 package com.alessandromelo.dto.usuario;
 
-import com.alessandromelo.dto.dispositivo.DispositivoResumoDTO;
+import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
 
 public class UsuarioDispositivoResponseDTO {
 
     private Long usuarioId;
     private String nome;
     private String matricula;
-    private DispositivoResumoDTO dispositivoResumoDTO;
+    private DispositivoResumoResponseDTO dispositivoResumoResponseDTO;
 
 
     public UsuarioDispositivoResponseDTO() {
     }
 
-    public UsuarioDispositivoResponseDTO(Long usuarioId, String nome, String matricula, DispositivoResumoDTO dispositivoResumoDTO) {
+    public UsuarioDispositivoResponseDTO(Long usuarioId, String nome, String matricula, DispositivoResumoResponseDTO dispositivoResumoResponseDTO) {
         this.usuarioId = usuarioId;
         this.nome = nome;
         this.matricula = matricula;
-        this.dispositivoResumoDTO = dispositivoResumoDTO;
+        this.dispositivoResumoResponseDTO = dispositivoResumoResponseDTO;
     }
 
     public Long getUsuarioId() {
@@ -44,11 +44,11 @@ public class UsuarioDispositivoResponseDTO {
         this.matricula = matricula;
     }
 
-    public DispositivoResumoDTO getDispositivoResumoDTO() {
-        return dispositivoResumoDTO;
+    public DispositivoResumoResponseDTO getDispositivoResumoDTO() {
+        return dispositivoResumoResponseDTO;
     }
 
-    public void setDispositivoResumoDTO(DispositivoResumoDTO dispositivoResumoDTO) {
-        this.dispositivoResumoDTO = dispositivoResumoDTO;
+    public void setDispositivoResumoDTO(DispositivoResumoResponseDTO dispositivoResumoResponseDTO) {
+        this.dispositivoResumoResponseDTO = dispositivoResumoResponseDTO;
     }
 }

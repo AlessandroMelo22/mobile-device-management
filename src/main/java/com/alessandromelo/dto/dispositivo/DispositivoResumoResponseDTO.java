@@ -1,14 +1,14 @@
 package com.alessandromelo.dto.dispositivo;
 
-public class DispositivoResumoDTO {
+public class DispositivoResumoResponseDTO {
 
     private Long id;
     private String modelo;
 
-    public DispositivoResumoDTO() {
+    public DispositivoResumoResponseDTO() {
     }
 
-    public DispositivoResumoDTO(Long id, String modelo) {
+    public DispositivoResumoResponseDTO(Long id, String modelo) {
         this.id = id;
         this.modelo = modelo;
     }

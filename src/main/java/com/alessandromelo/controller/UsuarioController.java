@@ -1,13 +1,10 @@
 package com.alessandromelo.controller;
 
-import com.alessandromelo.dto.dispositivo.DispositivoResumoDTO;
+import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioDepartamentoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioDispositivoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
 import com.alessandromelo.dto.usuario.UsuarioResponseDTO;
-import com.alessandromelo.model.Departamento;
-import com.alessandromelo.model.Dispositivo;
-import com.alessandromelo.model.Usuario;
 import com.alessandromelo.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,7 +64,7 @@ public class UsuarioController {
 
 //Listar Dispositivos cadastrados em um determinado Usuario:
     @GetMapping("/{usuarioId}/dispositivos")
-    public ResponseEntity<List<DispositivoResumoDTO>> listarDispositivosCadastradosEmUmUsuario(@PathVariable Long usuarioId){
+    public ResponseEntity<List<DispositivoResumoResponseDTO>> listarDispositivosCadastradosEmUmUsuario(@PathVariable Long usuarioId){
         return ResponseEntity.ok(this.usuarioService.listarDispositivosCadastradosEmUmUsuario(usuarioId));
     }
 

@@ -1,23 +1,23 @@
 package com.alessandromelo.dto.usuario;
 
-import com.alessandromelo.dto.departamento.DepartamentoResumoDTO;
+import com.alessandromelo.dto.departamento.DepartamentoResumoResponseDTO;
 
 public class UsuarioDepartamentoResponseDTO {
 
     private Long usuarioId;
     private String nome;
     private String matricula;
-    private DepartamentoResumoDTO departamentoResumoDTO;
+    private DepartamentoResumoResponseDTO departamentoResumoResponseDTO;
 
 
     public UsuarioDepartamentoResponseDTO() {
     }
 
-    public UsuarioDepartamentoResponseDTO(Long usuarioId, String nome, String matricula, DepartamentoResumoDTO departamentoResumoDTO) {
+    public UsuarioDepartamentoResponseDTO(Long usuarioId, String nome, String matricula, DepartamentoResumoResponseDTO departamentoResumoResponseDTO) {
         this.usuarioId = usuarioId;
         this.nome = nome;
         this.matricula = matricula;
-        this.departamentoResumoDTO = departamentoResumoDTO;
+        this.departamentoResumoResponseDTO = departamentoResumoResponseDTO;
     }
 
 
@@ -45,11 +45,11 @@ public class UsuarioDepartamentoResponseDTO {
         this.matricula = matricula;
     }
 
-    public DepartamentoResumoDTO getDepartamentoResumoDTO() {
-        return departamentoResumoDTO;
+    public DepartamentoResumoResponseDTO getDepartamentoResumoDTO() {
+        return departamentoResumoResponseDTO;
     }
 
-    public void setDepartamentoResumoDTO(DepartamentoResumoDTO departamentoResumoDTO) {
-        this.departamentoResumoDTO = departamentoResumoDTO;
+    public void setDepartamentoResumoDTO(DepartamentoResumoResponseDTO departamentoResumoResponseDTO) {
+        this.departamentoResumoResponseDTO = departamentoResumoResponseDTO;
     }
 }

@@ -1,11 +1,8 @@
 package com.alessandromelo.mapper;
 
-import com.alessandromelo.dto.departamento.DepartamentoResumoDTO;
-import com.alessandromelo.dto.dispositivo.DispositivoResumoDTO;
-import com.alessandromelo.dto.usuario.UsuarioDepartamentoResponseDTO;
-import com.alessandromelo.dto.usuario.UsuarioDispositivoResponseDTO;
-import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
-import com.alessandromelo.dto.usuario.UsuarioResponseDTO;
+import com.alessandromelo.dto.departamento.DepartamentoResumoResponseDTO;
+import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
+import com.alessandromelo.dto.usuario.*;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Dispositivo;
 import com.alessandromelo.model.Usuario;
@@ -39,16 +36,16 @@ public class UsuarioMapper {
         usuarioResponseDTO.setAtivo(usuario.getAtivo());
 
         //DepartamentoResumo:
-        DepartamentoResumoDTO departamentoResumoDTO = new DepartamentoResumoDTO();
-        departamentoResumoDTO.setId(usuario.getDepartamento().getId());
-        departamentoResumoDTO.setNome(usuario.getDepartamento().getNome());
+        DepartamentoResumoResponseDTO departamentoResumoResponseDTO = new DepartamentoResumoResponseDTO();
+        departamentoResumoResponseDTO.setId(usuario.getDepartamento().getId());
+        departamentoResumoResponseDTO.setNome(usuario.getDepartamento().getNome());
 
-        usuarioResponseDTO.setDepartamentoResumoDTO(departamentoResumoDTO);
+        usuarioResponseDTO.setDepartamentoResumoDTO(departamentoResumoResponseDTO);
 
         return usuarioResponseDTO;
     }
 
-    //Etity -> UsuarioDispositivoDTO:
+    //Etity -> UsuarioDispositivoResponseDTO:
     public UsuarioDispositivoResponseDTO toUsuarioDispositivoResponseDTO(Usuario usuario, Dispositivo dispositivo){
 
         UsuarioDispositivoResponseDTO usuarioDispositivoResponseDTO = new UsuarioDispositivoResponseDTO();
@@ -57,16 +54,16 @@ public class UsuarioMapper {
         usuarioDispositivoResponseDTO.setMatricula(usuario.getMatricula());
 
         //DispositivoResumo:
-        DispositivoResumoDTO dispositivoResumoDTO = new DispositivoResumoDTO();
-        dispositivoResumoDTO.setId(dispositivo.getId());
-        dispositivoResumoDTO.setModelo(dispositivo.getModelo());
+        DispositivoResumoResponseDTO dispositivoResumoResponseDTO = new DispositivoResumoResponseDTO();
+        dispositivoResumoResponseDTO.setId(dispositivo.getId());
+        dispositivoResumoResponseDTO.setModelo(dispositivo.getModelo());
 
-        usuarioDispositivoResponseDTO.setDispositivoResumoDTO(dispositivoResumoDTO);
+        usuarioDispositivoResponseDTO.setDispositivoResumoDTO(dispositivoResumoResponseDTO);
 
         return usuarioDispositivoResponseDTO;
     }
 
-    //Entity
+    //Entity --> UsuarioDepartamentoResponseDTO:
     public UsuarioDepartamentoResponseDTO toUsuarioDepartamentoResponseDTO(Usuario usuario, Departamento departamento){
 
         UsuarioDepartamentoResponseDTO usuarioDepartamentoResponseDTO = new UsuarioDepartamentoResponseDTO();
@@ -75,13 +72,26 @@ public class UsuarioMapper {
         usuarioDepartamentoResponseDTO.setMatricula(usuario.getMatricula());
 
         //DepartamentoResumo:
-        DepartamentoResumoDTO departamentoResumoDTO = new DepartamentoResumoDTO();
-        departamentoResumoDTO.setId(departamento.getId());
-        departamentoResumoDTO.setNome(departamento.getNome());
+        DepartamentoResumoResponseDTO departamentoResumoResponseDTO = new DepartamentoResumoResponseDTO();
+        departamentoResumoResponseDTO.setId(departamento.getId());
+        departamentoResumoResponseDTO.setNome(departamento.getNome());
 
-        usuarioDepartamentoResponseDTO.setDepartamentoResumoDTO(departamentoResumoDTO);
+        usuarioDepartamentoResponseDTO.setDepartamentoResumoDTO(departamentoResumoResponseDTO);
 
         return usuarioDepartamentoResponseDTO;
+    }
+
+    //Entity --> UsuarioResumoResponseDTO:
+    public UsuarioResumoResponseDTO toResumoResponseDTO(Usuario usuario){
+
+        UsuarioResumoResponseDTO usuarioResumoResponseDTO = new UsuarioResumoResponseDTO();
+
+        usuarioResumoResponseDTO.setId(usuario.getId());
+        usuarioResumoResponseDTO.setNome(usuario.getNome());
+        usuarioResumoResponseDTO.setMatricula(usuario.getMatricula());
+
+        return usuarioResumoResponseDTO;
+
     }
 
 }

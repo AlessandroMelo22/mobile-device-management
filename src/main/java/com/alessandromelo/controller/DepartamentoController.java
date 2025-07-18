@@ -1,5 +1,8 @@
 package com.alessandromelo.controller;
 
+import com.alessandromelo.dto.departamento.DepartamentoRequestDTO;
+import com.alessandromelo.dto.departamento.DepartamentoResponseDTO;
+import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
 import com.alessandromelo.model.Departamento;
 import com.alessandromelo.model.Usuario;
 import com.alessandromelo.service.DepartamentoService;
@@ -16,36 +19,36 @@ public class DepartamentoController {
     private DepartamentoService departamentoService;
 
 
-
     public DepartamentoController(DepartamentoService departamentoService) {
         this.departamentoService = departamentoService;
     }
 
 
+
 //Listar todos os Departamentos: (CERTO)
     @GetMapping
-    public ResponseEntity<List<Departamento>> listarTodosDepartamentos(){
+    public ResponseEntity<List<DepartamentoResponseDTO>> listarTodosDepartamentos(){
         return ResponseEntity.ok(this.departamentoService.listarTodosDepartamentos());
     }
 
 //Buscar Departamento por id: (CERTO)
     @GetMapping("/{departamentoId}")
-    public ResponseEntity<Departamento> buscarDepartamentoPorId(@PathVariable Long departamentoId){
+    public ResponseEntity<DepartamentoResponseDTO> buscarDepartamentoPorId(@PathVariable Long departamentoId){
         return ResponseEntity.ok(this.departamentoService.buscarDepartamentoPorId(departamentoId));
     }
 
 //Cadastrar novo Departamento: (CERTO)
     @PostMapping
-    public ResponseEntity<Departamento> criarNovoDepartamento(@RequestBody Departamento novoDepartamento){
+    public ResponseEntity<DepartamentoResponseDTO> criarNovoDepartamento(@RequestBody DepartamentoRequestDTO novoDepartamentoDTO){
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(this.departamentoService.criarNovoDepartamento(novoDepartamento));
+                .body(this.departamentoService.criarNovoDepartamento(novoDepartamentoDTO));
     }
 
 //Atualizar Departamento:
     @PutMapping("/{departamentoId}")
-    public ResponseEntity<Departamento> atualizarDepartamento(@PathVariable Long departamentoId, Departamento atualizado){
-        return ResponseEntity.ok(this.departamentoService.atualizarDepartamento(departamentoId, atualizado));
+    public ResponseEntity<DepartamentoResponseDTO> atualizarDepartamento(@PathVariable Long departamentoId, DepartamentoRequestDTO departamentoAtualizadoDTO){
+        return ResponseEntity.ok(this.departamentoService.atualizarDepartamento(departamentoId, departamentoAtualizadoDTO));
     }
 
 //Remover Departamento por id:
@@ -58,7 +61,7 @@ public class DepartamentoController {
 
 //Listar Usuarios que pertencem a um Departamento:
     @GetMapping("/{departamentoId}/usuarios")
-    public ResponseEntity<List<Usuario>> listarUsuariosDoDepartamento(@PathVariable Long departamentoId){
+    public ResponseEntity<List<UsuarioResumoResponseDTO>> listarUsuariosDoDepartamento(@PathVariable Long departamentoId){
         return ResponseEntity.ok(this.departamentoService.listarUsuariosDoDepartamento(departamentoId));
     }
 }

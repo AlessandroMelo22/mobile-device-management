@@ -1,6 +1,6 @@
 package com.alessandromelo.dto.usuario;
 
-import com.alessandromelo.dto.departamento.DepartamentoResumoDTO;
+import com.alessandromelo.dto.departamento.DepartamentoResumoResponseDTO;
 
 public class UsuarioResponseDTO {
 
@@ -10,20 +10,20 @@ public class UsuarioResponseDTO {
     private String matricula;
     private String cargo;
     private Boolean ativo;
-    private DepartamentoResumoDTO departamentoResumoDTO; //(FK)
+    private DepartamentoResumoResponseDTO departamentoResumoResponseDTO; //(FK)
 
 
     public UsuarioResponseDTO() {
     }
 
-    public UsuarioResponseDTO(Long id, String nome, String email, String matricula, String cargo, Boolean ativo, DepartamentoResumoDTO departamentoDTO) {
+    public UsuarioResponseDTO(Long id, String nome, String email, String matricula, String cargo, Boolean ativo, DepartamentoResumoResponseDTO departamentoDTO) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.matricula = matricula;
         this.cargo = cargo;
         this.ativo = ativo;
-        this.departamentoResumoDTO = departamentoDTO;
+        this.departamentoResumoResponseDTO = departamentoDTO;
 
     }
 
@@ -75,12 +75,12 @@ public class UsuarioResponseDTO {
         this.ativo = ativo;
     }
 
-    public DepartamentoResumoDTO getDepartamentoResumoDTO() {
-        return departamentoResumoDTO;
+    public DepartamentoResumoResponseDTO getDepartamentoResumoDTO() {
+        return departamentoResumoResponseDTO;
     }
 
-    public void setDepartamentoResumoDTO(DepartamentoResumoDTO departamentoResumoDTO) {
-        this.departamentoResumoDTO = UsuarioResponseDTO.this.departamentoResumoDTO;
+    public void setDepartamentoResumoDTO(DepartamentoResumoResponseDTO departamentoResumoResponseDTO) {
+        this.departamentoResumoResponseDTO = UsuarioResponseDTO.this.departamentoResumoResponseDTO;
     }
 
 

@@ -1,6 +1,6 @@
 package com.alessandromelo.dto.dispositivo;
 
-import com.alessandromelo.dto.usuario.UsuarioResumoDTO;
+import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
 
 public class DispositivoResponseDTO {
 
@@ -14,13 +14,13 @@ public class DispositivoResponseDTO {
     private String dataAquisicao;
     private String dataUltimaAtualizacao;
     private String observacoes;
-    private UsuarioResumoDTO usuarioResumoDTO; //(FK)
+    private UsuarioResumoResponseDTO usuarioResumoResponseDTO; //(FK)
 
 
     public DispositivoResponseDTO() {
     }
 
-    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioResumoDTO usuarioResumoDTO) {
+    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
         this.id = id;
         this.modelo = modelo;
         this.marca = marca;
@@ -31,7 +31,7 @@ public class DispositivoResponseDTO {
         this.dataAquisicao = dataAquisicao;
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
         this.observacoes = observacoes;
-        this.usuarioResumoDTO = usuarioResumoDTO;
+        this.usuarioResumoResponseDTO = usuarioResumoResponseDTO;
     }
 
 
@@ -115,11 +115,11 @@ public class DispositivoResponseDTO {
         this.observacoes = observacoes;
     }
 
-    public UsuarioResumoDTO getUsuarioResumoDTO() {
-        return usuarioResumoDTO;
+    public UsuarioResumoResponseDTO getUsuarioResumoDTO() {
+        return usuarioResumoResponseDTO;
     }
 
-    public void setUsuarioResumoDTO(UsuarioResumoDTO usuarioResumoDTO) {
-        this.usuarioResumoDTO = usuarioResumoDTO;
+    public void setUsuarioResumoDTO(UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
+        this.usuarioResumoResponseDTO = usuarioResumoResponseDTO;
     }
 }

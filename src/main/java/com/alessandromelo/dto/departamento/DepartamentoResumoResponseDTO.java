@@ -1,15 +1,15 @@
 package com.alessandromelo.dto.departamento;
 
-public class DepartamentoResumoDTO {
+public class DepartamentoResumoResponseDTO {
 
     private Long id;
     private String nome;
 
 
-    public DepartamentoResumoDTO() {
+    public DepartamentoResumoResponseDTO() {
     }
 
-    public DepartamentoResumoDTO(Long id, String nome) {
+    public DepartamentoResumoResponseDTO(Long id, String nome) {
         this.id = id;
         this.nome = nome;
     }

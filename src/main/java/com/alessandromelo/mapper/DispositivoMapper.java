@@ -2,8 +2,8 @@ package com.alessandromelo.mapper;
 
 import com.alessandromelo.dto.dispositivo.DispositivoRequestDTO;
 import com.alessandromelo.dto.dispositivo.DispositivoResponseDTO;
-import com.alessandromelo.dto.dispositivo.DispositivoResumoDTO;
-import com.alessandromelo.dto.usuario.UsuarioResumoDTO;
+import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
+import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
 import com.alessandromelo.model.Dispositivo;
 import org.springframework.stereotype.Component;
 
@@ -44,24 +44,25 @@ public class DispositivoMapper {
         dispositivoResponseDTO.setDataUltimaAtualizacao(dispositivo.getDataUltimaAtualizacao());
         dispositivoResponseDTO.setObservacoes(dispositivo.getObservacoes());
 
-        UsuarioResumoDTO usuarioResumoDTO = new UsuarioResumoDTO();
+        UsuarioResumoResponseDTO usuarioResumoResponseDTO = new UsuarioResumoResponseDTO();
 
-        usuarioResumoDTO.setId(dispositivo.getUsuario().getId());
-        usuarioResumoDTO.setNome(dispositivo.getUsuario().getNome());
+        usuarioResumoResponseDTO.setId(dispositivo.getUsuario().getId());
+        usuarioResumoResponseDTO.setNome(dispositivo.getUsuario().getNome());
+        usuarioResumoResponseDTO.setMatricula(dispositivo.getUsuario().getMatricula());
 
-        dispositivoResponseDTO.setUsuarioResumoDTO(usuarioResumoDTO);
+        dispositivoResponseDTO.setUsuarioResumoDTO(usuarioResumoResponseDTO);
 
         return dispositivoResponseDTO;
     }
 
-    public DispositivoResumoDTO toResumoDTO(Dispositivo dispositivo){
+    public DispositivoResumoResponseDTO toResumoResponseDTO(Dispositivo dispositivo){
 
-        DispositivoResumoDTO dispositivoResumoDTO = new DispositivoResumoDTO();
+        DispositivoResumoResponseDTO dispositivoResumoResponseDTO = new DispositivoResumoResponseDTO();
 
-        dispositivoResumoDTO.setId(dispositivo.getId());
-        dispositivoResumoDTO.setModelo(dispositivo.getModelo());
+        dispositivoResumoResponseDTO.setId(dispositivo.getId());
+        dispositivoResumoResponseDTO.setModelo(dispositivo.getModelo());
 
-        return dispositivoResumoDTO;
+        return dispositivoResumoResponseDTO;
     }
 
 }

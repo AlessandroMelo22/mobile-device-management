@@ -1,6 +1,6 @@
 package com.alessandromelo.service;
 
-import com.alessandromelo.dto.dispositivo.DispositivoResumoDTO;
+import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioDepartamentoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioDispositivoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
@@ -27,24 +27,24 @@ import java.util.List;
 public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
-    private DepartamentoRepository departamentoRepository;
-    private DispositivoRepository dispositivoRepository;
-
     private UsuarioMapper usuarioMapper;
+
+    private DispositivoRepository dispositivoRepository;
     private DispositivoMapper dispositivoMapper;
-    private DepartamentoMapper departamentoMapper;
+
+    private DepartamentoRepository departamentoRepository;
+
 
 
     public UsuarioService(UsuarioRepository usuarioRepository, DepartamentoRepository departamentoRepository,
                           DispositivoRepository dispositivoRepository, UsuarioMapper usuarioMapper,
-                          DispositivoMapper dispositivoMapper, DepartamentoMapper departamentoMapper) {
+                          DispositivoMapper dispositivoMapper) {
 
         this.usuarioRepository = usuarioRepository;
         this.departamentoRepository = departamentoRepository;
         this.dispositivoRepository = dispositivoRepository;
         this.usuarioMapper = usuarioMapper;
         this.dispositivoMapper = dispositivoMapper;
-        this.departamentoMapper = departamentoMapper;
     }
 
 
@@ -65,7 +65,7 @@ public class UsuarioService {
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
 
-        return usuarioMapper.toResponseDTO(usuario);
+        return this.usuarioMapper.toResponseDTO(usuario);
     }
 
     /*
@@ -93,14 +93,14 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
             throw new MatriculaJaCadastradaException();
         }
         //2
-        Usuario usuario = usuarioMapper.toEntity(novoUsuarioDTO);
+        Usuario usuario = this.usuarioMapper.toEntity(novoUsuarioDTO);
         //3
         Departamento departamento = this.departamentoRepository.findById(novoUsuarioDTO.getDepartamentoId())
                 .orElseThrow(() -> new DepartamentoNaoEncontradoException(novoUsuarioDTO.getDepartamentoId()));
         //4
         usuario.setDepartamento(departamento);
 
-        return usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
+        return this.usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
     }
 
 
@@ -109,7 +109,7 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
 
         return this.usuarioRepository.findById(usuarioId)
                 .map(usuario -> {
-
+                    //1
                     boolean emailJaExiste = this.usuarioRepository.existsByEmailAndIdNot(usuarioAtualizadoDTO.getEmail(),usuarioId);
                     boolean matriculaJaExiste = this.usuarioRepository.existsByMatriculaAndIdNot(usuarioAtualizadoDTO.getMatricula(),usuarioId);
 
@@ -130,7 +130,7 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
 
                     usuario.setDepartamento(departamento);
 
-                    return usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
+                    return this.usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
 
                 } ).orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
@@ -141,15 +141,15 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
     }
 
 //Listar Dispositivos cadastrados em um determinado Usuario   (CERTO)
-    public List<DispositivoResumoDTO> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
+    public List<DispositivoResumoResponseDTO> listarDispositivosCadastradosEmUmUsuario(Long usuarioId){
 
         List<Dispositivo> dispositivos = this.usuarioRepository.findById(usuarioId).map(Usuario::getDispositivos)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
 
-        return dispositivos.stream().map(dispositivoMapper::toResumoDTO).toList();
+        return dispositivos.stream().map(this.dispositivoMapper::toResumoResponseDTO).toList();
     }
 
-//Setar Dispositivos a um Usuario:
+//Setar Dispositivo a um Usuario:
     public UsuarioDispositivoResponseDTO vincularDispositivoAoUsuario(Long usuarioId, Long dispositivoId){
 
         Usuario usuario = this.usuarioRepository.findById(usuarioId)
@@ -162,7 +162,7 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
 
         this.dispositivoRepository.save(dispositivo);
 
-        return usuarioMapper.toUsuarioDispositivoResponseDTO(usuario, dispositivo);
+        return this.usuarioMapper.toUsuarioDispositivoResponseDTO(usuario, dispositivo);
     }
 
 
@@ -179,10 +179,11 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
 
         this.usuarioRepository.save(usuario);
 
-        return usuarioMapper.toUsuarioDepartamentoResponseDTO(usuario, departamento);
+        return this.usuarioMapper.toUsuarioDepartamentoResponseDTO(usuario, departamento);
     }
 
 
+//Acho que não faz sentido ter um metodo de mostrar o Departamento pois dentro da Entidade Usuario ja possui uma FK de Departamento
 
 ////Buscar Departamento do Usuario (CERTO)
 //    public Departamento buscarDepartamentoDoUsuario(Long usuarioId){

@@ -26,7 +26,7 @@ public class DepartamentoMapper {
 
         departamentoResponseDTO.setId(departamento.getId());
         departamentoResponseDTO.setNome(departamento.getNome());
-        departamentoResponseDTO.setSigla(departamento.getNome());
+        departamentoResponseDTO.setSigla(departamento.getSigla());
 
 
         return departamentoResponseDTO;
