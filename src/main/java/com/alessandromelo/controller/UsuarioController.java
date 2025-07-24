@@ -6,6 +6,7 @@ import com.alessandromelo.dto.usuario.UsuarioDispositivoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
 import com.alessandromelo.dto.usuario.UsuarioResponseDTO;
 import com.alessandromelo.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class UsuarioController {
 
 //Cadastrar novo Usuario:
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> cadastrarNovoUsuario(@RequestBody UsuarioRequestDTO novoUsuarioDTO){
+    public ResponseEntity<UsuarioResponseDTO> cadastrarNovoUsuario(@RequestBody @Valid UsuarioRequestDTO novoUsuarioDTO){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(this.usuarioService.cadastrarNovoUsuario(novoUsuarioDTO));
     }
@@ -48,7 +49,7 @@ public class UsuarioController {
 //Atualizar Usuario:
     @PutMapping("/{usuarioId}")
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long usuarioId,
-                                                               @RequestBody UsuarioRequestDTO usuarioAtualizadoDTO){
+                                                               @RequestBody @Valid UsuarioRequestDTO usuarioAtualizadoDTO){
         return ResponseEntity.ok(this.usuarioService.atualizarUsuario(usuarioId, usuarioAtualizadoDTO));
     }
 

@@ -1,4 +1,4 @@
-package com.alessandromelo.model;
+package com.alessandromelo.entity;
 
 import jakarta.persistence.*;
 

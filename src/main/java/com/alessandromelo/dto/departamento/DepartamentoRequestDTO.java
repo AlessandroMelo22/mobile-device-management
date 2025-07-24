@@ -1,9 +1,15 @@
 package com.alessandromelo.dto.departamento;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class DepartamentoRequestDTO {
 
+    @NotBlank(message = "O nome do Departamento deve ser informado!")
     private String nome;
+
+    @NotBlank(message = "A sigla do Departamento deve ser informada!")
     private String sigla;
+
 
 
     public DepartamentoRequestDTO() {

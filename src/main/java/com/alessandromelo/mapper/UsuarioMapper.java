@@ -3,9 +3,9 @@ package com.alessandromelo.mapper;
 import com.alessandromelo.dto.departamento.DepartamentoResumoResponseDTO;
 import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
 import com.alessandromelo.dto.usuario.*;
-import com.alessandromelo.model.Departamento;
-import com.alessandromelo.model.Dispositivo;
-import com.alessandromelo.model.Usuario;
+import com.alessandromelo.entity.Departamento;
+import com.alessandromelo.entity.Dispositivo;
+import com.alessandromelo.entity.Usuario;
 import org.springframework.stereotype.Component;
 
 @Component

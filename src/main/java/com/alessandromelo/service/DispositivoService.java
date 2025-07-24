@@ -6,14 +6,13 @@ import com.alessandromelo.exception.dispositivo.DispositivoNaoEncontradoExceptio
 import com.alessandromelo.exception.dispositivo.NumeroDeSerieJaCadastradoException;
 import com.alessandromelo.exception.usuario.UsuarioNaoEncontradoException;
 import com.alessandromelo.mapper.DispositivoMapper;
-import com.alessandromelo.model.Dispositivo;
-import com.alessandromelo.model.Usuario;
+import com.alessandromelo.entity.Dispositivo;
+import com.alessandromelo.entity.Usuario;
 import com.alessandromelo.repository.DispositivoRepository;
 import com.alessandromelo.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DispositivoService {

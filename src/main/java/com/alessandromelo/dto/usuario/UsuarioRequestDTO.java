@@ -1,14 +1,25 @@
 package com.alessandromelo.dto.usuario;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class UsuarioRequestDTO {
 
+    @NotBlank(message = "O nome do Usuário deve ser informado!")
     private String nome;
+
+    @NotBlank(message = "O e-mail do Usuário deve ser informado!")
+    @Email(message = "Formato de e-mail inválido!")
     private String email;
+
+    @NotBlank(message = "A matrícula do Usuário deve ser informada!")
     private String matricula;
+
     private String cargo;
     private Boolean ativo;
 
     private Long departamentoId; //(FK)
+
 
 
     public UsuarioRequestDTO() {

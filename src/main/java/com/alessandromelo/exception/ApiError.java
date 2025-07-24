@@ -4,6 +4,7 @@ package com.alessandromelo.exception;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ApiError {
 
@@ -14,6 +15,7 @@ public class ApiError {
     private LocalDateTime timestamp;
 
 
+
     public ApiError(HttpStatus status, String message, String path) {
         this.status = status.value();
         this.error = status.getReasonPhrase();
@@ -21,6 +23,15 @@ public class ApiError {
         this.path = path;
         this.timestamp = LocalDateTime.now();
     }
+
+    public ApiError(HttpStatus status, String path) {
+        this.status = status.value();
+        this.error = status.getReasonPhrase();
+        this.path = path;
+        this.timestamp = LocalDateTime.now();
+    }
+
+
 
     public Integer getStatus() {
         return status;
@@ -61,4 +72,6 @@ public class ApiError {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
+
 }

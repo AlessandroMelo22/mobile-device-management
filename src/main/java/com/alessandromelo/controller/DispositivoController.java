@@ -2,9 +2,8 @@ package com.alessandromelo.controller;
 
 import com.alessandromelo.dto.dispositivo.DispositivoRequestDTO;
 import com.alessandromelo.dto.dispositivo.DispositivoResponseDTO;
-import com.alessandromelo.model.Dispositivo;
-import com.alessandromelo.model.Usuario;
 import com.alessandromelo.service.DispositivoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,7 @@ public class DispositivoController {
 
 //Cadastrar Dispositivo:
     @PostMapping()
-    public ResponseEntity<DispositivoResponseDTO> cadastrarNovoDispositivo(@RequestBody DispositivoRequestDTO novoDispositivoDTO){
+    public ResponseEntity<DispositivoResponseDTO> cadastrarNovoDispositivo(@RequestBody @Valid DispositivoRequestDTO novoDispositivoDTO){
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(this.dispositivoService.cadastrarNovoDispositivo(novoDispositivoDTO));
@@ -46,7 +45,7 @@ public class DispositivoController {
 //Atualizar Dispositivo:
     @PutMapping("/{dispositivoId}")
     public ResponseEntity<DispositivoResponseDTO> atualizarDispositivo(@PathVariable Long dispositivoId,
-                                                                       @RequestBody DispositivoRequestDTO atualizado){
+                                                                       @RequestBody @Valid DispositivoRequestDTO atualizado){
         return ResponseEntity.ok(this.dispositivoService.atualizarDispositivo(dispositivoId, atualizado));
     }
 

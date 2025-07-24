@@ -12,11 +12,15 @@ import com.alessandromelo.exception.usuario.UsuarioNaoEncontradoException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestControllerAdvice
-public class RestExceptionHandler {
+public class GlobalExceptionHandler {
 
 ////////////USUARIO:
 
@@ -92,10 +96,22 @@ public class RestExceptionHandler {
     }
 
 
+///////VALIDAÇÃO:
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleValidationException(MethodArgumentNotValidException ex,
+                                                              HttpServletRequest request){
 
+        String mensagensDeErros = ex.getBindingResult().getFieldErrors().stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError
+                        .getDefaultMessage()).collect(Collectors.joining(" | "));
 
+        //400
+        ApiError error = new ApiError(HttpStatus.BAD_REQUEST, request.getRequestURI());
+        error.setMessage(mensagensDeErros);
 
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
 
 }

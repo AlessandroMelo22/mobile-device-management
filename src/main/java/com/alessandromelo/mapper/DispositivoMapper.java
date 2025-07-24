@@ -5,7 +5,7 @@ import com.alessandromelo.dto.dispositivo.DispositivoResponseDTO;
 import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
 import com.alessandromelo.enums.DispositivoStatus;
-import com.alessandromelo.model.Dispositivo;
+import com.alessandromelo.entity.Dispositivo;
 import org.springframework.stereotype.Component;
 
 @Component

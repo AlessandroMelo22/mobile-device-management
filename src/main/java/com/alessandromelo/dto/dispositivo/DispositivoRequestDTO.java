@@ -1,12 +1,19 @@
 package com.alessandromelo.dto.dispositivo;
 
 import com.alessandromelo.enums.DispositivoStatus;
+import jakarta.validation.constraints.NotBlank;
 
 public class DispositivoRequestDTO {
 
+    @NotBlank(message = "O modelo do Dispositivo deve ser informado!")
     private String modelo;
+
+    @NotBlank(message = "A marca do Dispositivo deve ser informada!")
     private String marca;
+
+    @NotBlank(message = "O número de série do Dispositivo deve ser informado!")
     private String numeroSerie;
+
     private String sistemaOperacional;
     private String versaoSO;
     private DispositivoStatus status;
@@ -15,6 +22,7 @@ public class DispositivoRequestDTO {
     private String observacoes;
 
     private Long usuarioId; //(FK)
+
 
 
     public DispositivoRequestDTO() {

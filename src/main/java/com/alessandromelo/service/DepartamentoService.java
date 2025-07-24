@@ -8,8 +8,8 @@ import com.alessandromelo.exception.departamento.NomeJaCadastradoException;
 import com.alessandromelo.exception.departamento.SiglaJaCadastradaException;
 import com.alessandromelo.mapper.DepartamentoMapper;
 import com.alessandromelo.mapper.UsuarioMapper;
-import com.alessandromelo.model.Departamento;
-import com.alessandromelo.model.Usuario;
+import com.alessandromelo.entity.Departamento;
+import com.alessandromelo.entity.Usuario;
 import com.alessandromelo.repository.DepartamentoRepository;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,7 @@ package com.alessandromelo.mapper;
 
 import com.alessandromelo.dto.departamento.DepartamentoRequestDTO;
 import com.alessandromelo.dto.departamento.DepartamentoResponseDTO;
-import com.alessandromelo.model.Departamento;
+import com.alessandromelo.entity.Departamento;
 import org.springframework.stereotype.Component;
 
 @Component

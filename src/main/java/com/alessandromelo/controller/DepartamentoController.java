@@ -3,9 +3,8 @@ package com.alessandromelo.controller;
 import com.alessandromelo.dto.departamento.DepartamentoRequestDTO;
 import com.alessandromelo.dto.departamento.DepartamentoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
-import com.alessandromelo.model.Departamento;
-import com.alessandromelo.model.Usuario;
 import com.alessandromelo.service.DepartamentoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +38,7 @@ public class DepartamentoController {
 
 //Cadastrar novo Departamento: (CERTO)
     @PostMapping
-    public ResponseEntity<DepartamentoResponseDTO> criarNovoDepartamento(@RequestBody DepartamentoRequestDTO novoDepartamentoDTO){
+    public ResponseEntity<DepartamentoResponseDTO> criarNovoDepartamento(@RequestBody @Valid DepartamentoRequestDTO novoDepartamentoDTO){
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(this.departamentoService.criarNovoDepartamento(novoDepartamentoDTO));
@@ -48,7 +47,7 @@ public class DepartamentoController {
 //Atualizar Departamento:
     @PutMapping("/{departamentoId}")
     public ResponseEntity<DepartamentoResponseDTO> atualizarDepartamento(@PathVariable Long departamentoId,
-                                                                         @RequestBody DepartamentoRequestDTO departamentoAtualizadoDTO){
+                                                                         @RequestBody @Valid DepartamentoRequestDTO departamentoAtualizadoDTO){
         return ResponseEntity.ok(this.departamentoService.atualizarDepartamento(departamentoId, departamentoAtualizadoDTO));
     }
 

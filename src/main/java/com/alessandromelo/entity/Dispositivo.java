@@ -1,4 +1,4 @@
-package com.alessandromelo.model;
+package com.alessandromelo.entity;
 
 import com.alessandromelo.enums.DispositivoStatus;
 import jakarta.persistence.*;
