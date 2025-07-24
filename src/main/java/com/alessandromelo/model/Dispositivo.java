@@ -1,5 +1,6 @@
 package com.alessandromelo.model;
 
+import com.alessandromelo.enums.DispositivoStatus;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,7 +21,8 @@ public class Dispositivo {
 
     private String versaoSO;
 
-    private String status; //enum (ATIVO, INATIVO, EM_MANUTENCAO, PERDIDO, BLOQUEADO)
+    @Enumerated(EnumType.STRING)
+    private DispositivoStatus status; //enum (ATIVO, INATIVO, EM_MANUTENCAO, DESCARTADO)
 
     private String dataAquisicao;
 
@@ -36,7 +38,7 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, Usuario usuario, String dataAquisicao, String dataUltimaAtualizacao, String observacoes) {
+    public Dispositivo(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, Usuario usuario, String dataAquisicao, String dataUltimaAtualizacao, String observacoes) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
@@ -98,11 +100,11 @@ public class Dispositivo {
         this.versaoSO = versaoSO;
     }
 
-    public String getStatus() {
+    public DispositivoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(DispositivoStatus status) {
         this.status = status;
     }
 

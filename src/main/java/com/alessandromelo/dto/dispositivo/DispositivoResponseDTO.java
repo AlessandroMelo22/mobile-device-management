@@ -1,6 +1,7 @@
 package com.alessandromelo.dto.dispositivo;
 
 import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
+import com.alessandromelo.enums.DispositivoStatus;
 
 public class DispositivoResponseDTO {
 
@@ -10,7 +11,7 @@ public class DispositivoResponseDTO {
     private String numeroSerie;
     private String sistemaOperacional;
     private String versaoSO;
-    private String status;
+    private DispositivoStatus status;
     private String dataAquisicao;
     private String dataUltimaAtualizacao;
     private String observacoes;
@@ -20,7 +21,7 @@ public class DispositivoResponseDTO {
     public DispositivoResponseDTO() {
     }
 
-    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, String status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
+    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
         this.id = id;
         this.modelo = modelo;
         this.marca = marca;
@@ -83,11 +84,11 @@ public class DispositivoResponseDTO {
         this.versaoSO = versaoSO;
     }
 
-    public String getStatus() {
+    public DispositivoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(DispositivoStatus status) {
         this.status = status;
     }
 

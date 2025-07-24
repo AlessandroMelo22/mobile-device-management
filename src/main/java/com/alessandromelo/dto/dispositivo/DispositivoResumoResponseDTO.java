@@ -1,15 +1,17 @@
 package com.alessandromelo.dto.dispositivo;
 
+import com.alessandromelo.enums.DispositivoStatus;
+
 public class DispositivoResumoResponseDTO {
 
     private Long id;
     private String modelo;
-    private String status;
+    private DispositivoStatus status;
 
     public DispositivoResumoResponseDTO() {
     }
 
-    public DispositivoResumoResponseDTO(Long id, String modelo, String status) {
+    public DispositivoResumoResponseDTO(Long id, String modelo, DispositivoStatus status) {
         this.id = id;
         this.modelo = modelo;
         this.status = status;
@@ -31,11 +33,11 @@ public class DispositivoResumoResponseDTO {
         this.modelo = modelo;
     }
 
-    public String getStatus() {
+    public DispositivoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(DispositivoStatus status) {
         this.status = status;
     }
 }

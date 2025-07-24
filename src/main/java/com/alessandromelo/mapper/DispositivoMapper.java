@@ -4,6 +4,7 @@ import com.alessandromelo.dto.dispositivo.DispositivoRequestDTO;
 import com.alessandromelo.dto.dispositivo.DispositivoResponseDTO;
 import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
+import com.alessandromelo.enums.DispositivoStatus;
 import com.alessandromelo.model.Dispositivo;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,13 @@ public class DispositivoMapper {
         dispositivo.setNumeroSerie(dispositivoRequestDTO.getNumeroSerie());
         dispositivo.setSistemaOperacional(dispositivoRequestDTO.getSistemaOperacional());
         dispositivo.setVersaoSO(dispositivoRequestDTO.getVersaoSO());
-        dispositivo.setStatus(dispositivoRequestDTO.getStatus());
+
+        if(dispositivoRequestDTO.getStatus() == null){ //Se o status não for informado sera setado por padrão como ATIVO
+            dispositivo.setStatus(DispositivoStatus.ATIVO);
+        } else {
+            dispositivo.setStatus(dispositivoRequestDTO.getStatus());
+        }
+
         dispositivo.setDataAquisicao(dispositivoRequestDTO.getDataAquisicao());
         dispositivo.setDataUltimaAtualizacao(dispositivoRequestDTO.getDataUltimaAtualizacao());
         dispositivo.setObservacoes(dispositivoRequestDTO.getObservacoes());

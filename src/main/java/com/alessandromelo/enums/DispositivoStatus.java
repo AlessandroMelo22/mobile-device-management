@@ -4,7 +4,6 @@ public enum DispositivoStatus {
 
     ATIVO,
     DESATIVADO,
-    EM_MANUTENCAO
-
-
+    EM_MANUTENCAO,
+    DESCARTADO
 }
