@@ -46,8 +46,7 @@ public class DispositivoController {
 //Atualizar Dispositivo:
     @PutMapping("/{dispositivoId}")
     public ResponseEntity<DispositivoResponseDTO> atualizarDispositivo(@PathVariable Long dispositivoId,
-                                                            @RequestBody DispositivoRequestDTO atualizado){
-
+                                                                       @RequestBody DispositivoRequestDTO atualizado){
         return ResponseEntity.ok(this.dispositivoService.atualizarDispositivo(dispositivoId, atualizado));
     }
 

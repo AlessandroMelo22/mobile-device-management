@@ -4,13 +4,15 @@ public class DispositivoResumoResponseDTO {
 
     private Long id;
     private String modelo;
+    private String status;
 
     public DispositivoResumoResponseDTO() {
     }
 
-    public DispositivoResumoResponseDTO(Long id, String modelo) {
+    public DispositivoResumoResponseDTO(Long id, String modelo, String status) {
         this.id = id;
         this.modelo = modelo;
+        this.status = status;
     }
 
     public Long getId() {
@@ -27,5 +29,13 @@ public class DispositivoResumoResponseDTO {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

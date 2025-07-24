@@ -115,11 +115,11 @@ public class DispositivoResponseDTO {
         this.observacoes = observacoes;
     }
 
-    public UsuarioResumoResponseDTO getUsuarioResumoDTO() {
+    public UsuarioResumoResponseDTO getUsuarioResumoResponseDTO() {
         return usuarioResumoResponseDTO;
     }
 
-    public void setUsuarioResumoDTO(UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
+    public void setUsuarioResumoResponseDTO(UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
         this.usuarioResumoResponseDTO = usuarioResumoResponseDTO;
     }
 }

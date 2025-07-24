@@ -7,7 +7,6 @@ import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
 import com.alessandromelo.dto.usuario.UsuarioResponseDTO;
 import com.alessandromelo.exception.usuario.EmailJaCadastradoException;
 import com.alessandromelo.exception.usuario.MatriculaJaCadastradaException;
-import com.alessandromelo.mapper.DepartamentoMapper;
 import com.alessandromelo.mapper.DispositivoMapper;
 import com.alessandromelo.mapper.UsuarioMapper;
 import com.alessandromelo.model.Departamento;
@@ -76,7 +75,8 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
 
     2- Realizo mapeamento do RequestDTO recebido para uma entidade Usuario
 
-    3- Busco no banco o departamento pelo Id que é informado no UsuarioRequestDTO
+    3- Se o id do Departamento for informaddo no UsuarioRequestDTO,
+    busco no banco pelo departamento, caso contrário será nulo
 
     4- Depois de buscar eu setto o departamento dentro da entidade Usuario
 
@@ -95,10 +95,13 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
         //2
         Usuario usuario = this.usuarioMapper.toEntity(novoUsuarioDTO);
         //3
-        Departamento departamento = this.departamentoRepository.findById(novoUsuarioDTO.getDepartamentoId())
-                .orElseThrow(() -> new DepartamentoNaoEncontradoException(novoUsuarioDTO.getDepartamentoId()));
-        //4
-        usuario.setDepartamento(departamento);
+        if (novoUsuarioDTO.getDepartamentoId() != null){
+
+            Departamento departamento = this.departamentoRepository.findById(novoUsuarioDTO.getDepartamentoId())
+                    .orElseThrow(() -> new DepartamentoNaoEncontradoException(novoUsuarioDTO.getDepartamentoId()));
+            //4
+            usuario.setDepartamento(departamento);
+        }
 
         return this.usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
     }
@@ -125,10 +128,13 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
                     usuario.setEmail(usuarioAtualizadoDTO.getEmail());
                     usuario.setAtivo(usuarioAtualizadoDTO.getAtivo());
 
-                    Departamento departamento = this.departamentoRepository.findById(usuarioAtualizadoDTO.getDepartamentoId())
-                            .orElseThrow(() -> new DepartamentoNaoEncontradoException(usuarioAtualizadoDTO.getDepartamentoId()));
+                    if(usuarioAtualizadoDTO.getDepartamentoId() != null){
 
-                    usuario.setDepartamento(departamento);
+                        Departamento departamento = this.departamentoRepository.findById(usuarioAtualizadoDTO.getDepartamentoId())
+                                .orElseThrow(() -> new DepartamentoNaoEncontradoException(usuarioAtualizadoDTO.getDepartamentoId()));
+
+                        usuario.setDepartamento(departamento);
+                    }
 
                     return this.usuarioMapper.toResponseDTO(this.usuarioRepository.save(usuario));
 

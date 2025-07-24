@@ -75,12 +75,12 @@ public class UsuarioResponseDTO {
         this.ativo = ativo;
     }
 
-    public DepartamentoResumoResponseDTO getDepartamentoResumoDTO() {
+    public DepartamentoResumoResponseDTO getDepartamentoResumoResponseDTO() {
         return departamentoResumoResponseDTO;
     }
 
-    public void setDepartamentoResumoDTO(DepartamentoResumoResponseDTO departamentoResumoResponseDTO) {
-        this.departamentoResumoResponseDTO = UsuarioResponseDTO.this.departamentoResumoResponseDTO;
+    public void setDepartamentoResumoResponseDTO(DepartamentoResumoResponseDTO departamentoResumoResponseDTO) {
+        this.departamentoResumoResponseDTO = departamentoResumoResponseDTO;
     }
 
 

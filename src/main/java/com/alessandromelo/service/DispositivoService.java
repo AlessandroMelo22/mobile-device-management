@@ -57,10 +57,13 @@ public class DispositivoService {
 
         Dispositivo dispositivo = this.dispositivoMapper.toEntity(novoDispositivoDTO);
 
-        Usuario usuario = this.usuarioRepository.findById(novoDispositivoDTO.getUsuarioId())
-                .orElseThrow(() -> new UsuarioNaoEncontradoException(novoDispositivoDTO.getUsuarioId()));
+        if(novoDispositivoDTO.getUsuarioId() != null){
 
-        dispositivo.setUsuario(usuario);
+            Usuario usuario = this.usuarioRepository.findById(novoDispositivoDTO.getUsuarioId())
+                    .orElseThrow(() -> new UsuarioNaoEncontradoException(novoDispositivoDTO.getUsuarioId()));
+
+            dispositivo.setUsuario(usuario);
+        }
 
         return this.dispositivoMapper.toResponseDTO(this.dispositivoRepository.save(dispositivo));
     }
@@ -87,10 +90,14 @@ public class DispositivoService {
                    dispositivo.setObservacoes(dispositivoAtualizadoDTO.getObservacoes());
                    dispositivo.setStatus(dispositivoAtualizadoDTO.getStatus());
 
-                   Usuario usuario = this.usuarioRepository.findById(dispositivoAtualizadoDTO.getUsuarioId())
-                           .orElseThrow(() -> new UsuarioNaoEncontradoException(dispositivoAtualizadoDTO.getUsuarioId()));
+                   if(dispositivoAtualizadoDTO.getUsuarioId() != null){
 
-                   dispositivo.setUsuario(usuario);
+                       Usuario usuario = this.usuarioRepository.findById(dispositivoAtualizadoDTO.getUsuarioId())
+                               .orElseThrow(() -> new UsuarioNaoEncontradoException(dispositivoAtualizadoDTO.getUsuarioId()));
+
+                       dispositivo.setUsuario(usuario);
+                   }
+
 
                    return this.dispositivoMapper.toResponseDTO(this.dispositivoRepository.save(dispositivo));
 

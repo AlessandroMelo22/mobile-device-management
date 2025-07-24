@@ -28,7 +28,6 @@ public class DepartamentoMapper {
         departamentoResponseDTO.setNome(departamento.getNome());
         departamentoResponseDTO.setSigla(departamento.getSigla());
 
-
         return departamentoResponseDTO;
     }
 }

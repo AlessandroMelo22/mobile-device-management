@@ -28,7 +28,7 @@ public class DispositivoMapper {
         return dispositivo;
     }
 
-
+    //Entity -> responseDTO
     public DispositivoResponseDTO toResponseDTO(Dispositivo dispositivo){
 
         DispositivoResponseDTO dispositivoResponseDTO = new DispositivoResponseDTO();
@@ -44,23 +44,27 @@ public class DispositivoMapper {
         dispositivoResponseDTO.setDataUltimaAtualizacao(dispositivo.getDataUltimaAtualizacao());
         dispositivoResponseDTO.setObservacoes(dispositivo.getObservacoes());
 
-        UsuarioResumoResponseDTO usuarioResumoResponseDTO = new UsuarioResumoResponseDTO();
+        if(dispositivo.getUsuario() != null){
 
-        usuarioResumoResponseDTO.setId(dispositivo.getUsuario().getId());
-        usuarioResumoResponseDTO.setNome(dispositivo.getUsuario().getNome());
-        usuarioResumoResponseDTO.setMatricula(dispositivo.getUsuario().getMatricula());
+            UsuarioResumoResponseDTO usuarioResumoResponseDTO = new UsuarioResumoResponseDTO();
+            usuarioResumoResponseDTO.setId(dispositivo.getUsuario().getId());
+            usuarioResumoResponseDTO.setNome(dispositivo.getUsuario().getNome());
+            usuarioResumoResponseDTO.setMatricula(dispositivo.getUsuario().getMatricula());
 
-        dispositivoResponseDTO.setUsuarioResumoDTO(usuarioResumoResponseDTO);
+            dispositivoResponseDTO.setUsuarioResumoResponseDTO(usuarioResumoResponseDTO);
+        }
 
         return dispositivoResponseDTO;
     }
 
+    //Entity -> resumoResponseDTO:
     public DispositivoResumoResponseDTO toResumoResponseDTO(Dispositivo dispositivo){
 
         DispositivoResumoResponseDTO dispositivoResumoResponseDTO = new DispositivoResumoResponseDTO();
 
         dispositivoResumoResponseDTO.setId(dispositivo.getId());
         dispositivoResumoResponseDTO.setModelo(dispositivo.getModelo());
+        dispositivoResumoResponseDTO.setStatus(dispositivo.getStatus());
 
         return dispositivoResumoResponseDTO;
     }

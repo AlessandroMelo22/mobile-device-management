@@ -47,14 +47,14 @@ public class DepartamentoController {
 
 //Atualizar Departamento:
     @PutMapping("/{departamentoId}")
-    public ResponseEntity<DepartamentoResponseDTO> atualizarDepartamento(@PathVariable Long departamentoId, DepartamentoRequestDTO departamentoAtualizadoDTO){
+    public ResponseEntity<DepartamentoResponseDTO> atualizarDepartamento(@PathVariable Long departamentoId,
+                                                                         @RequestBody DepartamentoRequestDTO departamentoAtualizadoDTO){
         return ResponseEntity.ok(this.departamentoService.atualizarDepartamento(departamentoId, departamentoAtualizadoDTO));
     }
 
 //Remover Departamento por id:
     @DeleteMapping("/{departamentoId}")
     public ResponseEntity<Void> removerDepartamentoPorId(@PathVariable Long departamentoId){
-
         this.departamentoService.removerDepartamentoPorId(departamentoId);
         return ResponseEntity.noContent().build(); //204
     }
