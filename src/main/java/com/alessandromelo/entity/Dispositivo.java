@@ -34,6 +34,10 @@ public class Dispositivo {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario; // FK
 
+    @OneToOne(mappedBy = "dispositivo")
+    private Agente agente;
+
+
 
     public Dispositivo() {
     }
