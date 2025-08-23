@@ -1,15 +1,15 @@
 package com.alessandromelo.entity;
 
 import com.alessandromelo.enums.AgenteStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Agente {
 
+    @Id
     private Long id;
     private String versao;
+    @Enumerated(EnumType.STRING)
     private AgenteStatus status; // enum (ATIVO, INATIVO, EM_EXECUCAO)
     private String log; // Log de execução do agente
     private String dataUltimaAtividade;

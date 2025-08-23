@@ -1,6 +1,7 @@
 package com.alessandromelo.exceptionhandler;
 
 import com.alessandromelo.exception.ApiError;
+import com.alessandromelo.exception.agente.AgenteNaoEncontradoException;
 import com.alessandromelo.exception.departamento.DepartamentoNaoEncontradoException;
 import com.alessandromelo.exception.departamento.NomeJaCadastradoException;
 import com.alessandromelo.exception.departamento.SiglaJaCadastradaException;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-////////////USUARIO:
+///////USUARIO:
 
     @ExceptionHandler(UsuarioNaoEncontradoException.class)
     public ResponseEntity<ApiError> handleUsuarioNaoEncontradoException (UsuarioNaoEncontradoException ex,
@@ -94,6 +95,19 @@ public class GlobalExceptionHandler {
         ApiError error = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+
+
+//////AGENTE:
+
+    @ExceptionHandler(AgenteNaoEncontradoException.class)
+    public ResponseEntity<ApiError> handleAgenteNaoEncontradoException (AgenteNaoEncontradoException ex,
+                                                                        HttpServletRequest request){
+        ApiError error = new ApiError(HttpStatus.BAD_REQUEST,ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+
 
 
 ///////VALIDAÇÃO:

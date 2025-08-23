@@ -97,7 +97,6 @@ public class DispositivoService {
                        dispositivo.setUsuario(usuario);
                    }
 
-
                    return this.dispositivoMapper.toResponseDTO(this.dispositivoRepository.save(dispositivo));
 
                }).orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
