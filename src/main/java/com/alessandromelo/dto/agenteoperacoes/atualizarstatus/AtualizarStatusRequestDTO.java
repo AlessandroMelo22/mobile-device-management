@@ -1,30 +1,24 @@
-package com.alessandromelo.dto.agente;
+package com.alessandromelo.dto.agenteoperacoes.atualizarstatus;
 
 import com.alessandromelo.enums.AgenteStatus;
 
 import java.time.LocalDateTime;
 
-public class AgenteRequestDTO {
+public class AtualizarStatusRequestDTO {
 
     private String versao;
     private AgenteStatus status;
-    private String log;
     private LocalDateTime dataUltimaAtividade;
-    private Long dispositivoId; // FK
 
 
-
-    public AgenteRequestDTO() {
+    public AtualizarStatusRequestDTO() {
     }
 
-    public AgenteRequestDTO(String versao, AgenteStatus status, String log, LocalDateTime dataUltimaAtividade, Long dispositivoId) {
+    public AtualizarStatusRequestDTO(String versao, AgenteStatus status, LocalDateTime dataUltimaAtividade) {
         this.versao = versao;
         this.status = status;
-        this.log = log;
         this.dataUltimaAtividade = dataUltimaAtividade;
-        this.dispositivoId = dispositivoId;
     }
-
 
     public String getVersao() {
         return versao;
@@ -42,27 +36,11 @@ public class AgenteRequestDTO {
         this.status = status;
     }
 
-    public String getLog() {
-        return log;
-    }
-
-    public void setLog(String log) {
-        this.log = log;
-    }
-
     public LocalDateTime getDataUltimaAtividade() {
         return dataUltimaAtividade;
     }
 
     public void setDataUltimaAtividade(LocalDateTime dataUltimaAtividade) {
         this.dataUltimaAtividade = dataUltimaAtividade;
-    }
-
-    public Long getDispositivoId() {
-        return dispositivoId;
-    }
-
-    public void setDispositivoId(Long dispositivoId) {
-        this.dispositivoId = dispositivoId;
     }
 }

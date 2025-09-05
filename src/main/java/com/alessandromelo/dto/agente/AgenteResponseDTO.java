@@ -3,6 +3,8 @@ package com.alessandromelo.dto.agente;
 import com.alessandromelo.dto.dispositivo.DispositivoResumoResponseDTO;
 import com.alessandromelo.enums.AgenteStatus;
 
+import java.time.LocalDateTime;
+
 public class AgenteResponseDTO {
 
 
@@ -10,13 +12,13 @@ public class AgenteResponseDTO {
     private String versao;
     private AgenteStatus status;
     private String log;
-    private String dataUltimaAtividade;
+    private LocalDateTime dataUltimaAtividade;
     private DispositivoResumoResponseDTO dispositivoResumoResponseDTO; // FK
 
     public AgenteResponseDTO() {
     }
 
-    public AgenteResponseDTO(Long id, String versao, AgenteStatus status, String log, String dataUltimaAtividade, DispositivoResumoResponseDTO dispositivoResumoResponseDTO) {
+    public AgenteResponseDTO(Long id, String versao, AgenteStatus status, String log, LocalDateTime dataUltimaAtividade, DispositivoResumoResponseDTO dispositivoResumoResponseDTO) {
         this.id = id;
         this.versao = versao;
         this.status = status;
@@ -57,11 +59,11 @@ public class AgenteResponseDTO {
         this.log = log;
     }
 
-    public String getDataUltimaAtividade() {
+    public LocalDateTime getDataUltimaAtividade() {
         return dataUltimaAtividade;
     }
 
-    public void setDataUltimaAtividade(String dataUltimaAtividade) {
+    public void setDataUltimaAtividade(LocalDateTime dataUltimaAtividade) {
         this.dataUltimaAtividade = dataUltimaAtividade;
     }
 

@@ -108,6 +108,18 @@ public class GlobalExceptionHandler {
     }
 
 
+//////AGENTEOPERACOES:
+
+
+
+
+
+//////COMANDO:
+
+
+
+
+
 
 
 ///////VALIDAÇÃO:

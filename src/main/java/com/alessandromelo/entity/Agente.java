@@ -3,34 +3,43 @@ package com.alessandromelo.entity;
 import com.alessandromelo.enums.AgenteStatus;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 public class Agente {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String versao;
     @Enumerated(EnumType.STRING)
     private AgenteStatus status; // enum (ATIVO, INATIVO, EM_EXECUCAO)
     private String log; // Log de execução do agente
-    private String dataUltimaAtividade;
+    private LocalDateTime dataUltimaAtividade;
+//  private String ip;
+//  private String tipoConexao;
 
     @OneToOne
     @JoinColumn(name = "id_dispositivo")
     private Dispositivo dispositivo; //FK
 
-    //private String ip;
-    //private String tipoConexao;
+    @OneToMany(mappedBy = "agente")
+    private List<Comando> comandos;
+
+
 
     public Agente() {
     }
 
-    public Agente(Long id, String versao, AgenteStatus status, String log, String dataUltimaAtividade, Dispositivo dispositivo) {
+    public Agente(Long id, String versao, AgenteStatus status, String log, LocalDateTime dataUltimaAtividade, Dispositivo dispositivo, List<Comando> comandos) {
         this.id = id;
         this.versao = versao;
         this.status = status;
         this.log = log;
         this.dataUltimaAtividade = dataUltimaAtividade;
         this.dispositivo = dispositivo;
+        this.comandos = comandos;
     }
 
     public Long getId() {
@@ -65,11 +74,11 @@ public class Agente {
         this.log = log;
     }
 
-    public String getDataUltimaAtividade() {
+    public LocalDateTime getDataUltimaAtividade() {
         return dataUltimaAtividade;
     }
 
-    public void setDataUltimaAtividade(String dataUltimaAtividade) {
+    public void setDataUltimaAtividade(LocalDateTime dataUltimaAtividade) {
         this.dataUltimaAtividade = dataUltimaAtividade;
     }
 
@@ -79,5 +88,13 @@ public class Agente {
 
     public void setDispositivo(Dispositivo dispositivo) {
         this.dispositivo = dispositivo;
+    }
+
+    public List<Comando> getComandos() {
+        return comandos;
+    }
+
+    public void setComandos(List<Comando> comandos) {
+        this.comandos = comandos;
     }
 }
