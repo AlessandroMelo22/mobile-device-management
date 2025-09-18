@@ -83,10 +83,5 @@ public class UsuarioController {
         return ResponseEntity.ok(this.usuarioService.vincularUsuarioAoDepartamento(usuarioId, departamentoId));
     }
 
-////Buscar Departamento do Usuario:
-//    @GetMapping("/{usuarioId}/departamento")
-//    public ResponseEntity<Departamento> buscarDepartamentoDoUsuario(@PathVariable Long usuarioId) {
-//        return ResponseEntity.ok(this.usuarioService.buscarDepartamentoDoUsuario(usuarioId));
-//
-//    }
+
 }

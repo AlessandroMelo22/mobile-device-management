@@ -3,6 +3,8 @@ package com.alessandromelo.dto.dispositivo;
 import com.alessandromelo.enums.DispositivoStatus;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDateTime;
+
 public class DispositivoRequestDTO {
 
     @NotBlank(message = "O modelo do Dispositivo deve ser informado!")
@@ -17,8 +19,8 @@ public class DispositivoRequestDTO {
     private String sistemaOperacional;
     private String versaoSO;
     private DispositivoStatus status;
-    private String dataAquisicao;
-    private String dataUltimaAtualizacao;
+    private LocalDateTime dataAquisicao;
+    private LocalDateTime dataUltimaAtualizacao;
     private String observacoes;
 
     private Long usuarioId; //(FK)
@@ -28,7 +30,7 @@ public class DispositivoRequestDTO {
     public DispositivoRequestDTO() {
     }
 
-    public DispositivoRequestDTO(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, String dataAquisicao, String dataUltimaAtualizacao,String observacoes, Long usuarioId) {
+    public DispositivoRequestDTO(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, LocalDateTime dataAquisicao, LocalDateTime dataUltimaAtualizacao,String observacoes, Long usuarioId) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
@@ -90,19 +92,19 @@ public class DispositivoRequestDTO {
         this.status = status;
     }
 
-    public String getDataAquisicao() {
+    public LocalDateTime getDataAquisicao() {
         return dataAquisicao;
     }
 
-    public void setDataAquisicao(String dataAquisicao) {
+    public void setDataAquisicao(LocalDateTime dataAquisicao) {
         this.dataAquisicao = dataAquisicao;
     }
 
-    public String getDataUltimaAtualizacao() {
+    public LocalDateTime getDataUltimaAtualizacao() {
         return dataUltimaAtualizacao;
     }
 
-    public void setDataUltimaAtualizacao(String dataUltimaAtualizacao) {
+    public void setDataUltimaAtualizacao(LocalDateTime dataUltimaAtualizacao) {
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
     }
 

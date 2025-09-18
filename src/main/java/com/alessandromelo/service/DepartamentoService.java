@@ -6,11 +6,13 @@ import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
 import com.alessandromelo.exception.departamento.DepartamentoNaoEncontradoException;
 import com.alessandromelo.exception.departamento.NomeJaCadastradoException;
 import com.alessandromelo.exception.departamento.SiglaJaCadastradaException;
+import com.alessandromelo.exception.global.EntidadeEmUsoException;
 import com.alessandromelo.mapper.DepartamentoMapper;
 import com.alessandromelo.mapper.UsuarioMapper;
 import com.alessandromelo.entity.Departamento;
 import com.alessandromelo.entity.Usuario;
 import com.alessandromelo.repository.DepartamentoRepository;
+import com.alessandromelo.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +23,14 @@ public class DepartamentoService {
     private DepartamentoRepository departamentoRepository;
     private DepartamentoMapper departamentoMapper;
 
+    private UsuarioRepository usuarioRepository;
     private UsuarioMapper usuarioMapper;
 
-    public DepartamentoService(DepartamentoRepository departamentoRepository, DepartamentoMapper departamentoMapper, UsuarioMapper usuarioMapper) {
+
+    public DepartamentoService(DepartamentoRepository departamentoRepository, DepartamentoMapper departamentoMapper, UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
         this.departamentoRepository = departamentoRepository;
         this.departamentoMapper = departamentoMapper;
+        this.usuarioRepository = usuarioRepository;
         this.usuarioMapper = usuarioMapper;
     }
 
@@ -46,7 +51,7 @@ public class DepartamentoService {
         return this.departamentoMapper.toResponseDTO(departamento);
     }
 
-    //Criar Departamento: (CERTO)
+    //Criar Departamento:
     public DepartamentoResponseDTO criarNovoDepartamento(DepartamentoRequestDTO novoDepartamentoDTO){
 
         Boolean nomeJaExiste = this.departamentoRepository.existsByNome(novoDepartamentoDTO.getNome());
@@ -86,12 +91,25 @@ public class DepartamentoService {
                 }).orElseThrow(() -> new DepartamentoNaoEncontradoException(departamentoId));
     }
 
-    //Remover Departamento: (CERTO)
+
+//Remover Departamento:
     public void removerDepartamentoPorId(Long departamentoId){
-        this.departamentoRepository.deleteById(departamentoId);
+
+        //verifica se o departamento existe
+        Departamento departamento = this.departamentoRepository.findById(departamentoId)
+                .orElseThrow(() -> new DepartamentoNaoEncontradoException(departamentoId));
+
+        //verifica se à Usuarios associados a esse Departamento, caso true, a exclusão não pode acontecer
+        boolean possuiUsuarios = this.usuarioRepository.existsByDepartamentoId(departamentoId);
+        if(possuiUsuarios){
+            throw new EntidadeEmUsoException(Departamento.class, departamentoId);
+        }
+
+        //caso passe por todas verificações, ai sim o Departamento é excluido.
+        this.departamentoRepository.delete(departamento);
     }
 
-    //Listar Usuarios que pertencem ao Departamento: (CERTO)
+//Listar Usuarios que pertencem ao Departamento:
     public List<UsuarioResumoResponseDTO> listarUsuariosDoDepartamento(Long departamentoId){
 
         List<Usuario> usuarios = this.departamentoRepository.findById(departamentoId).map(Departamento::getUsuarios)

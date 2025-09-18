@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/agentes/operacoes")
+@RequestMapping("/agentes/{agenteId}/operacoes")
 public class AgenteOperacoesController {
 
     private AgenteOperacoesService agenteOperacoesService;
@@ -29,7 +29,7 @@ public class AgenteOperacoesController {
 
  */
 //Atualiza status, dataUltimaAtividade, ipUltimo, versao.
-    @PutMapping("/{agenteId}")
+    @PutMapping("/status")
     public ResponseEntity<AtualizarStatusResponseDTO> atualizarStatus(@PathVariable Long agenteId,
                                                                                  @RequestBody AtualizarStatusRequestDTO requestDTO){
 
@@ -38,7 +38,7 @@ public class AgenteOperacoesController {
 
 
 // O agente consulta quais ordens precisa executar (ex: bloquear tela).
-    @GetMapping("/{agenteId}")
+    @GetMapping("/comandos-pendentes")
     public ResponseEntity<BuscarComandosPendentesResponseDTO> buscarComandosPendentes(@PathVariable Long agenteId){
 
         return ResponseEntity.ok(this.agenteOperacoesService.buscarComandosPendentes(agenteId));

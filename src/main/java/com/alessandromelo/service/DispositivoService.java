@@ -4,10 +4,12 @@ import com.alessandromelo.dto.dispositivo.DispositivoRequestDTO;
 import com.alessandromelo.dto.dispositivo.DispositivoResponseDTO;
 import com.alessandromelo.exception.dispositivo.DispositivoNaoEncontradoException;
 import com.alessandromelo.exception.dispositivo.NumeroDeSerieJaCadastradoException;
+import com.alessandromelo.exception.global.EntidadeEmUsoException;
 import com.alessandromelo.exception.usuario.UsuarioNaoEncontradoException;
 import com.alessandromelo.mapper.DispositivoMapper;
 import com.alessandromelo.entity.Dispositivo;
 import com.alessandromelo.entity.Usuario;
+import com.alessandromelo.repository.AgenteRepository;
 import com.alessandromelo.repository.DispositivoRepository;
 import com.alessandromelo.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,20 @@ public class DispositivoService {
 
     private UsuarioRepository usuarioRepository;
 
-    public DispositivoService(DispositivoRepository dispositivoRepository, DispositivoMapper dispositivoMapper, UsuarioRepository usuarioRepository) {
+    private AgenteRepository agenteRepository;
+
+
+
+    public DispositivoService(DispositivoRepository dispositivoRepository, DispositivoMapper dispositivoMapper, UsuarioRepository usuarioRepository, AgenteRepository agenteRepository) {
         this.dispositivoRepository = dispositivoRepository;
         this.dispositivoMapper = dispositivoMapper;
         this.usuarioRepository = usuarioRepository;
+        this.agenteRepository = agenteRepository;
     }
 
-    //Listar todos os dispositivos: (CERTO)
+
+
+//Listar todos os dispositivos: (CERTO)
     public List<DispositivoResponseDTO> listarTodosDispositivos(){
 
         List<Dispositivo> dispositivos = this.dispositivoRepository.findAll();
@@ -36,7 +45,7 @@ public class DispositivoService {
     }
 
 
-    //Buscar Dispositivo por Id: (CERTO)
+//Buscar Dispositivo por Id: (CERTO)
     public DispositivoResponseDTO buscarDispositivoPorId(Long dispositivoId){
 
         Dispositivo dispositivo = this.dispositivoRepository.findById(dispositivoId)
@@ -45,7 +54,7 @@ public class DispositivoService {
         return this.dispositivoMapper.toResponseDTO(dispositivo);
     }
 
-    //Cadastrar Dispositivo: (CERTO)
+//Cadastrar Dispositivo: (CERTO)
     public DispositivoResponseDTO cadastrarNovoDispositivo(DispositivoRequestDTO novoDispositivoDTO){
 
         boolean numeroSerieExistente = this.dispositivoRepository.existsByNumeroSerie(novoDispositivoDTO.getNumeroSerie());
@@ -67,7 +76,7 @@ public class DispositivoService {
         return this.dispositivoMapper.toResponseDTO(this.dispositivoRepository.save(dispositivo));
     }
 
-    //Atualizar Dispositivo: (CONSERTAR O PROBLEMA DE CAMPOS NULOS)
+//Atualizar Dispositivo: (CONSERTAR O PROBLEMA DE CAMPOS NULOS)
     public DispositivoResponseDTO atualizarDispositivo(Long dispositivoId, DispositivoRequestDTO dispositivoAtualizadoDTO){
 
        return this.dispositivoRepository.findById(dispositivoId)
@@ -102,20 +111,20 @@ public class DispositivoService {
                }).orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
     }
 
-    //Remover Dispositivo: (CERTO)
+//Remover Dispositivo:
     public void removerDispositivoPorId(Long dispositivoId){
-        this.dispositivoRepository.deleteById(dispositivoId);
+
+        Dispositivo dispositivo = this.dispositivoRepository.findById(dispositivoId)
+                .orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
+
+
+        boolean possuiAgente = this.agenteRepository.existsByDispositivoId(dispositivoId);
+        if(possuiAgente){
+            throw new EntidadeEmUsoException(Dispositivo.class, dispositivoId);
+        }
+
+        this.dispositivoRepository.delete(dispositivo);
     }
 
-
-
-//Acho que não faz sentido um metodo de listar os Usuarios pois dentro da entidade ja possui a FK de Usuarios
-
-//    //Buscar Usuario cadastrado em um determinado Dispositivo: (CERTO)
-//    public Usuario buscarUsuarioCadastradoNoDispositivo(Long dispositivoId){
-//        return this.dispositivoRepository.findById(dispositivoId)
-//                .map(Dispositivo::getUsuario)
-//                .orElseThrow(() -> new DispositivoNaoEncontradoException(dispositivoId));
-//    }
 
 }

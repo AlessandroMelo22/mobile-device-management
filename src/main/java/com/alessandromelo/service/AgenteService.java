@@ -79,7 +79,7 @@ public class AgenteService {
                 }).orElseThrow(() -> new AgenteNaoEncontradoException(agenteId));
     }
 
-//Remover Agente:
+//Remover Agente: TEMPORARIO
     public void removerAgentePorId(Long agenteId){
         this.agenteRepository.deleteById(agenteId);
     }

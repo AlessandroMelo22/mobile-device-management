@@ -9,14 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BuscarComandosMapper {
+public class BuscarComandosPendentesMapper {
 
     private ComandoMapper comandoMapper;
 
-    BuscarComandosMapper() {
-    }
 
-    public BuscarComandosMapper(ComandoMapper comandoMapper) {
+    public BuscarComandosPendentesMapper(ComandoMapper comandoMapper) {
         this.comandoMapper = comandoMapper;
     }
 

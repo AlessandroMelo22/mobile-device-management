@@ -6,4 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AgenteRepository extends JpaRepository<Agente, Long> {
 
     //Aparentemente nao precisa criar métodos de validação, Agente não tem campos únicos
+
+
+    //verifica se existe algum Agente associado ao Dispositivo passado pelo ID
+    boolean existsByDispositivoId(Long dispositivoId);
+
 }

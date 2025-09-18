@@ -16,7 +16,7 @@ public class Comando {
     private ComandoTipo tipo; // Tipo do comando (ex: "REINICIAR", "ATUALIZAR", "BLOQUEAR" etc.)
     @Enumerated(EnumType.STRING)
     private ComandoStatus status; // Status do comando (ex: "PENDENTE", "EXECUTADO", "FALHA")
-    private String parametros; // Parâmetros adicionais para o comando, se necessário
+    private String parametros; // Parâmetros adicionais para o comando (por exemplo: motivo do bloqueio, versão da atualização etc.), geralmente em formato JSON ou String
     private LocalDateTime dataCriacao; //Data de criação do comando no banco
     private LocalDateTime dataExecucao;
 
@@ -30,7 +30,7 @@ public class Comando {
     public Comando() {
     }
 
-    public Comando(Long id, ComandoTipo tipo, ComandoStatus status, String parametros, LocalDateTime dataCriacao, LocalDateTime dataExecucao, Long agenteId) {
+    public Comando(Long id, ComandoTipo tipo, ComandoStatus status, String parametros, LocalDateTime dataCriacao, LocalDateTime dataExecucao, Agente agente) {
         this.id = id;
         this.tipo = tipo;
         this.status = status;

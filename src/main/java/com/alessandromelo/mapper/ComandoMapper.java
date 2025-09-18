@@ -36,7 +36,7 @@ public class ComandoMapper {
         comandoResponseDTO.setDataCriacao(comando.getDataCriacao());
         comandoResponseDTO.setDataExecucao(comando.getDataExecucao());
 
-        comandoResponseDTO.setAgenteId(comando.getAgente().getId()); //verificar se é assim msm
+        comandoResponseDTO.setAgenteId(comando.getAgente().getId()); //mostra apenas o ID do agente
 
         return comandoResponseDTO;
     }

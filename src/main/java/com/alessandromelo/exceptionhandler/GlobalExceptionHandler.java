@@ -2,11 +2,13 @@ package com.alessandromelo.exceptionhandler;
 
 import com.alessandromelo.exception.ApiError;
 import com.alessandromelo.exception.agente.AgenteNaoEncontradoException;
+import com.alessandromelo.exception.comando.ComandoNaoEncontradoException;
 import com.alessandromelo.exception.departamento.DepartamentoNaoEncontradoException;
 import com.alessandromelo.exception.departamento.NomeJaCadastradoException;
 import com.alessandromelo.exception.departamento.SiglaJaCadastradaException;
 import com.alessandromelo.exception.dispositivo.DispositivoNaoEncontradoException;
 import com.alessandromelo.exception.dispositivo.NumeroDeSerieJaCadastradoException;
+import com.alessandromelo.exception.global.EntidadeEmUsoException;
 import com.alessandromelo.exception.usuario.EmailJaCadastradoException;
 import com.alessandromelo.exception.usuario.MatriculaJaCadastradaException;
 import com.alessandromelo.exception.usuario.UsuarioNaoEncontradoException;
@@ -103,6 +105,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AgenteNaoEncontradoException.class)
     public ResponseEntity<ApiError> handleAgenteNaoEncontradoException (AgenteNaoEncontradoException ex,
                                                                         HttpServletRequest request){
+        //400
         ApiError error = new ApiError(HttpStatus.BAD_REQUEST,ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -110,16 +113,32 @@ public class GlobalExceptionHandler {
 
 //////AGENTEOPERACOES:
 
+    
 
 
 
 
 //////COMANDO:
 
+    @ExceptionHandler(ComandoNaoEncontradoException.class)
+    public ResponseEntity<ApiError> handleComandoNaoEncontradoException(ComandoNaoEncontradoException ex,
+                                                                                    HttpServletRequest request){
+        //400
+        ApiError error = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
 
 
+//////GLOBAL:
 
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<ApiError> handleEntidadeEmUsoException(EntidadeEmUsoException ex,
+                                                                 HttpServletRequest request){
+        //409
+        ApiError error = new ApiError(HttpStatus.CONFLICT, ex.getMessage(),request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 
 
 ///////VALIDAÇÃO:

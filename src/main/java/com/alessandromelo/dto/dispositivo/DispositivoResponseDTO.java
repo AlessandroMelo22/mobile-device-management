@@ -3,6 +3,8 @@ package com.alessandromelo.dto.dispositivo;
 import com.alessandromelo.dto.usuario.UsuarioResumoResponseDTO;
 import com.alessandromelo.enums.DispositivoStatus;
 
+import java.time.LocalDateTime;
+
 public class DispositivoResponseDTO {
 
     private Long id;
@@ -12,8 +14,8 @@ public class DispositivoResponseDTO {
     private String sistemaOperacional;
     private String versaoSO;
     private DispositivoStatus status;
-    private String dataAquisicao;
-    private String dataUltimaAtualizacao;
+    private LocalDateTime dataAquisicao;
+    private LocalDateTime dataUltimaAtualizacao;
     private String observacoes;
     private UsuarioResumoResponseDTO usuarioResumoResponseDTO; //(FK)
 
@@ -21,7 +23,7 @@ public class DispositivoResponseDTO {
     public DispositivoResponseDTO() {
     }
 
-    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, String dataAquisicao, String dataUltimaAtualizacao, String observacoes, UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
+    public DispositivoResponseDTO(Long id, String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, LocalDateTime dataAquisicao, LocalDateTime dataUltimaAtualizacao, String observacoes, UsuarioResumoResponseDTO usuarioResumoResponseDTO) {
         this.id = id;
         this.modelo = modelo;
         this.marca = marca;
@@ -92,19 +94,19 @@ public class DispositivoResponseDTO {
         this.status = status;
     }
 
-    public String getDataAquisicao() {
+    public LocalDateTime getDataAquisicao() {
         return dataAquisicao;
     }
 
-    public void setDataAquisicao(String dataAquisicao) {
+    public void setDataAquisicao(LocalDateTime dataAquisicao) {
         this.dataAquisicao = dataAquisicao;
     }
 
-    public String getDataUltimaAtualizacao() {
+    public LocalDateTime getDataUltimaAtualizacao() {
         return dataUltimaAtualizacao;
     }
 
-    public void setDataUltimaAtualizacao(String dataUltimaAtualizacao) {
+    public void setDataUltimaAtualizacao(LocalDateTime dataUltimaAtualizacao) {
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
     }
 

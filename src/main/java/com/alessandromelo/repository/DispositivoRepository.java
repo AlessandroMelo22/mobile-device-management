@@ -11,4 +11,7 @@ public interface DispositivoRepository extends JpaRepository<Dispositivo, Long> 
     //Retorna um boolean se o numeroSerie de um dispositivo especifico existe no banco
     boolean existsByNumeroSerieAndIdNot(String numeroSerie, Long id);
 
+
+    //Verifica se existe algum Dispositivo associado ao Usuario passado pelo ID:
+    boolean existsByUsuarioId(Long usuarioId);
 }

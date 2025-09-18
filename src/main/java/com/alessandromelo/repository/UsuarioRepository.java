@@ -10,4 +10,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     boolean existsByEmailAndIdNot(String email, Long id);
     boolean existsByMatriculaAndIdNot(String matricula,Long id);
+
+
+    //verifica se tem algum Usuario associado ao Departamento passado pelo Id
+    boolean existsByDepartamentoId(Long departamentoId);
 }

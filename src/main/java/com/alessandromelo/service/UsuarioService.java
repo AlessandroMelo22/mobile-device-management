@@ -5,6 +5,7 @@ import com.alessandromelo.dto.usuario.UsuarioDepartamentoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioDispositivoResponseDTO;
 import com.alessandromelo.dto.usuario.UsuarioRequestDTO;
 import com.alessandromelo.dto.usuario.UsuarioResponseDTO;
+import com.alessandromelo.exception.global.EntidadeEmUsoException;
 import com.alessandromelo.exception.usuario.EmailJaCadastradoException;
 import com.alessandromelo.exception.usuario.MatriculaJaCadastradaException;
 import com.alessandromelo.mapper.DispositivoMapper;
@@ -143,7 +144,16 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
 
 //Remover Usuario:
     public void removerUsuarioPorId(Long usuarioId){
-        this.usuarioRepository.deleteById(usuarioId);
+
+        Usuario usuario = this.usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
+
+        boolean possuiDispositivos = this.dispositivoRepository.existsByUsuarioId(usuarioId);
+        if(possuiDispositivos){
+            throw new EntidadeEmUsoException(Usuario.class, usuarioId);
+        }
+
+        this.usuarioRepository.delete(usuario);
     }
 
 //Listar Dispositivos cadastrados em um determinado Usuario   (CERTO)
@@ -187,15 +197,6 @@ cadastraNovoUsuario(UsuarioRequestDTO novoUsuarioDTO):
 
         return this.usuarioMapper.toUsuarioDepartamentoResponseDTO(usuario, departamento);
     }
-
-
-//Acho que não faz sentido ter um metodo de mostrar o Departamento pois dentro da Entidade Usuario ja possui uma FK de Departamento
-
-////Buscar Departamento do Usuario (CERTO)
-//    public Departamento buscarDepartamentoDoUsuario(Long usuarioId){
-//        return this.usuarioRepository.findById(usuarioId).map(Usuario::getDepartamento)
-//                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
-//    }
 
 
 }

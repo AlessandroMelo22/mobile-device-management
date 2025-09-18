@@ -13,7 +13,7 @@ public class ComandoResponseDTO {
     private String parametros;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataExecucao;
-    private Long agenteId;
+    private Long agenteId; //mostra apenas o ID do agente
 
     public ComandoResponseDTO() {
     }

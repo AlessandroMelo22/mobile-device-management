@@ -3,16 +3,17 @@ package com.alessandromelo.service;
 
 import com.alessandromelo.dto.agenteoperacoes.atualizarstatus.AtualizarStatusRequestDTO;
 import com.alessandromelo.dto.agenteoperacoes.atualizarstatus.AtualizarStatusResponseDTO;
+import com.alessandromelo.dto.agenteoperacoes.atualizarstatuscomando.AtualizarStatusComandoRequestDTO;
 import com.alessandromelo.dto.agenteoperacoes.buscarcomandospendentes.BuscarComandosPendentesResponseDTO;
 import com.alessandromelo.dto.agenteoperacoes.enviarlogs.EnviarLogsResponseDTO;
+import com.alessandromelo.entity.Agente;
 import com.alessandromelo.entity.Comando;
 import com.alessandromelo.enums.ComandoStatus;
 import com.alessandromelo.exception.agente.AgenteNaoEncontradoException;
 import com.alessandromelo.mapper.agenteoperacoes.AtualizarStatusMapper;
-import com.alessandromelo.mapper.agenteoperacoes.BuscarComandosMapper;
+import com.alessandromelo.mapper.agenteoperacoes.BuscarComandosPendentesMapper;
 import com.alessandromelo.repository.AgenteRepository;
 import com.alessandromelo.repository.ComandoRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,18 +25,18 @@ public class AgenteOperacoesService {
     private AgenteRepository agenteRepository;
     private AtualizarStatusMapper atualizarStatusMapper;
     private ComandoRepository comandoRepository;
-    private BuscarComandosMapper buscarComandosMapper;
+    private BuscarComandosPendentesMapper buscarComandosPendentesMapper;
 
-    public AgenteOperacoesService(AgenteRepository agenteRepository, AtualizarStatusMapper atualizarStatusMapper, ComandoRepository comandoRepository, BuscarComandosMapper buscarComandosMapper) {
+    public AgenteOperacoesService(AgenteRepository agenteRepository, AtualizarStatusMapper atualizarStatusMapper, ComandoRepository comandoRepository, BuscarComandosPendentesMapper buscarComandosPendentesMapper) {
         this.agenteRepository = agenteRepository;
         this.atualizarStatusMapper = atualizarStatusMapper;
         this.comandoRepository = comandoRepository;
-        this.buscarComandosMapper = buscarComandosMapper;
+        this.buscarComandosPendentesMapper = buscarComandosPendentesMapper;
     }
 
 
 
-
+//PUT
     public AtualizarStatusResponseDTO atualizarStatus(Long agenteId, AtualizarStatusRequestDTO requestDTO){
 
         return this.agenteRepository.findById(agenteId)
@@ -51,17 +52,24 @@ public class AgenteOperacoesService {
                 }).orElseThrow(()-> new AgenteNaoEncontradoException(agenteId));
     }
 
-
+//GET
     public BuscarComandosPendentesResponseDTO buscarComandosPendentes(Long agenteId){
 
+        Agente agente = this.agenteRepository.findById(agenteId)
+                .orElseThrow(() -> new AgenteNaoEncontradoException(agenteId));
+
         List<Comando> comandos = this.comandoRepository.findByAgenteIdAndStatusOrderByDataCriacaoAsc(agenteId, ComandoStatus.PENDENTE);
-        return this.buscarComandosMapper.toResponseDTO(agenteId, comandos);
-        
-        //Depois criar algo para atualizar o status do comando para "EXECUTADO" ou "FALHA" quando o agente informar o resultado da execução
+
+        return this.buscarComandosPendentesMapper.toResponseDTO(agenteId, comandos);
     }
 
 
 
+
+
+    public void atualizarStatusComando(Long comandoId, AtualizarStatusComandoRequestDTO requestDTO){
+        //logica para atualizar o status do comando (EXECUTADO ou FALHA) com base no comandoId e requestDTO
+    }
 
     public EnviarLogsResponseDTO enviarLogs(){
         // logica para receber e armazenar os logs enviados pelo agente

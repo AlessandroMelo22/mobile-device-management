@@ -5,7 +5,7 @@ import com.alessandromelo.enums.ComandoTipo;
 public class ComandoRequestDTO {
 
     private ComandoTipo tipo;
-    private String parametros;
+    private String parametros; //Parâmetros adicionais para o comando (por exemplo: motivo do bloqueio, versão da atualização etc.), geralmente em formato JSON ou String
     private Long agenteId;
 
 

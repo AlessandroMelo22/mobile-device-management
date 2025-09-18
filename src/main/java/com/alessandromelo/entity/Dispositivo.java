@@ -3,31 +3,24 @@ package com.alessandromelo.entity;
 import com.alessandromelo.enums.DispositivoStatus;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Dispositivo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String modelo;
-
     private String marca;
-
     @Column(unique = true)
     private String numeroSerie;
-
     private String sistemaOperacional;
-
     private String versaoSO;
-
     @Enumerated(EnumType.STRING)
     private DispositivoStatus status; //enum (ATIVO, INATIVO, EM_MANUTENCAO, DESCARTADO)
-
-    private String dataAquisicao;
-
-    private String dataUltimaAtualizacao;
-
+    private LocalDateTime dataAquisicao;
+    private LocalDateTime dataUltimaAtualizacao;
     private String observacoes;
 
     @ManyToOne
@@ -42,19 +35,19 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, Usuario usuario, String dataAquisicao, String dataUltimaAtualizacao, String observacoes) {
+    public Dispositivo(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, LocalDateTime dataAquisicao, LocalDateTime dataUltimaAtualizacao, String observacoes, Usuario usuario, Agente agente) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
         this.sistemaOperacional = sistemaOperacional;
         this.versaoSO = versaoSO;
         this.status = status;
-        this.usuario = usuario;
         this.dataAquisicao = dataAquisicao;
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
         this.observacoes = observacoes;
+        this.usuario = usuario;
+        this.agente = agente;
     }
-
 
     public Long getId() {
         return id;
@@ -112,19 +105,19 @@ public class Dispositivo {
         this.status = status;
     }
 
-    public String getDataAquisicao() {
+    public LocalDateTime getDataAquisicao() {
         return dataAquisicao;
     }
 
-    public void setDataAquisicao(String dataAquisicao) {
+    public void setDataAquisicao(LocalDateTime dataAquisicao) {
         this.dataAquisicao = dataAquisicao;
     }
 
-    public String getDataUltimaAtualizacao() {
+    public LocalDateTime getDataUltimaAtualizacao() {
         return dataUltimaAtualizacao;
     }
 
-    public void setDataUltimaAtualizacao(String dataUltimaAtualizacao) {
+    public void setDataUltimaAtualizacao(LocalDateTime dataUltimaAtualizacao) {
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
     }
 
@@ -142,5 +135,13 @@ public class Dispositivo {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Agente getAgente() {
+        return agente;
+    }
+
+    public void setAgente(Agente agente) {
+        this.agente = agente;
     }
 }

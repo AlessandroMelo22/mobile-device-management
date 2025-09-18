@@ -25,7 +25,7 @@ public class ComandoController {
         return ResponseEntity.ok(this.comandoService.buscarTodosComandos());
     }
 
-    @GetMapping
+    @GetMapping("/status")
     public ResponseEntity<List<ComandoResponseDTO>> buscarComandosPorStatus(@RequestParam ComandoStatus status){
         return ResponseEntity.ok(this.comandoService.buscarComandosPorStatus(status));
     }
@@ -40,5 +40,13 @@ public class ComandoController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(this.comandoService.criarComando(novoComandoDTO));
+    }
+
+
+    //TEMPORÁRIO
+    @DeleteMapping("/{comandoId}")
+    public ResponseEntity<Void> deletarComando(@PathVariable Long comandoId){
+        this.comandoService.deletarComando(comandoId);
+        return ResponseEntity.noContent().build();
     }
 }
