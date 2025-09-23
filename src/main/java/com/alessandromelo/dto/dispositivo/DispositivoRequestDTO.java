@@ -3,6 +3,7 @@ package com.alessandromelo.dto.dispositivo;
 import com.alessandromelo.enums.DispositivoStatus;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class DispositivoRequestDTO {
@@ -19,7 +20,7 @@ public class DispositivoRequestDTO {
     private String sistemaOperacional;
     private String versaoSO;
     private DispositivoStatus status;
-    private LocalDateTime dataAquisicao;
+    private LocalDate dataAquisicao;
     private LocalDateTime dataUltimaAtualizacao;
     private String observacoes;
 
@@ -30,7 +31,7 @@ public class DispositivoRequestDTO {
     public DispositivoRequestDTO() {
     }
 
-    public DispositivoRequestDTO(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, LocalDateTime dataAquisicao, LocalDateTime dataUltimaAtualizacao,String observacoes, Long usuarioId) {
+    public DispositivoRequestDTO(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, LocalDate dataAquisicao, LocalDateTime dataUltimaAtualizacao,String observacoes, Long usuarioId) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
@@ -92,11 +93,11 @@ public class DispositivoRequestDTO {
         this.status = status;
     }
 
-    public LocalDateTime getDataAquisicao() {
+    public LocalDate getDataAquisicao() {
         return dataAquisicao;
     }
 
-    public void setDataAquisicao(LocalDateTime dataAquisicao) {
+    public void setDataAquisicao(LocalDate dataAquisicao) {
         this.dataAquisicao = dataAquisicao;
     }
 

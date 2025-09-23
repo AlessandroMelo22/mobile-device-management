@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+/**
+ * Operações CRUD de Agente, operações essas que serão chamadas
+ * por algum adminstrador e não pelo Agente em sí.
+ */
 @RestController
 @RequestMapping("/agentes")
 public class AgenteController {
@@ -46,7 +51,7 @@ public class AgenteController {
         return ResponseEntity.ok(this.agenteService.atualizarAgente(agenteId,atualizado));
     }
 
-//Deletar por id:
+//Deletar por id: TEMPORÁRIO
     @DeleteMapping("/{agenteId}")
     public ResponseEntity<Void> deletarAgente(@PathVariable Long agenteId){
         return ResponseEntity.noContent().build(); //204

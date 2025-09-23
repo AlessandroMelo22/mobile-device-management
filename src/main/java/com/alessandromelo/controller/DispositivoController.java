@@ -35,7 +35,7 @@ public class DispositivoController {
     }
 
 //Cadastrar Dispositivo:
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<DispositivoResponseDTO> cadastrarNovoDispositivo(@RequestBody @Valid DispositivoRequestDTO novoDispositivoDTO){
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -57,10 +57,5 @@ public class DispositivoController {
         return ResponseEntity.noContent().build(); //204
     }
 
-////Buscar Usuario que está cadastrado no dispositivo:
-//    @GetMapping("/{dispositivoId}/usuarios")
-//    public ResponseEntity<Usuario> buscarUsuarioCadastradoNoDispositivo(@PathVariable Long dispositivoId){
-//        return ResponseEntity.ok(this.dispositivoService.buscarUsuarioCadastradoNoDispositivo(dispositivoId));
-//    }
 
 }

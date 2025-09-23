@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * Operações CRUD de Agente, operações essas que serão chamadas
+ * por algum adminstrador e não pelo Agente em sí.
+*/
 @Service
 public class AgenteService {
 
@@ -26,6 +31,9 @@ public class AgenteService {
         this.agenteMapper = agenteMapper;
         this.dispositivoRepository = dispositivoRepository;
     }
+
+
+
 //Buscar todos
     public List<AgenteResponseDTO> listarTodosAgentes() {
 
@@ -41,6 +49,7 @@ public class AgenteService {
 
         return this.agenteMapper.toResponseDTO(agente);
     }
+
 //Cadastrar novo Agente
     public AgenteResponseDTO cadastrarNovoAgente(AgenteRequestDTO novoAgenteDTO) {
 
@@ -56,7 +65,7 @@ public class AgenteService {
         return this.agenteMapper.toResponseDTO(this.agenteRepository.save(agente));
     }
 
-//Atualizar Agente:
+//Atualizar Agente CRUD:
     public AgenteResponseDTO atualizarAgente(Long agenteId, AgenteRequestDTO agenteAtualizadoDTO){
 
         return this.agenteRepository.findById(agenteId)
@@ -78,6 +87,12 @@ public class AgenteService {
 
                 }).orElseThrow(() -> new AgenteNaoEncontradoException(agenteId));
     }
+
+
+//Desativar Agente
+
+
+
 
 //Remover Agente: TEMPORARIO
     public void removerAgentePorId(Long agenteId){

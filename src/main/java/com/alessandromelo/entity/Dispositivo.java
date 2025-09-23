@@ -3,6 +3,7 @@ package com.alessandromelo.entity;
 import com.alessandromelo.enums.DispositivoStatus;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +20,7 @@ public class Dispositivo {
     private String versaoSO;
     @Enumerated(EnumType.STRING)
     private DispositivoStatus status; //enum (ATIVO, INATIVO, EM_MANUTENCAO, DESCARTADO)
-    private LocalDateTime dataAquisicao;
+    private LocalDate dataAquisicao;
     private LocalDateTime dataUltimaAtualizacao;
     private String observacoes;
 
@@ -35,7 +36,7 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, LocalDateTime dataAquisicao, LocalDateTime dataUltimaAtualizacao, String observacoes, Usuario usuario, Agente agente) {
+    public Dispositivo(String modelo, String marca, String numeroSerie, String sistemaOperacional, String versaoSO, DispositivoStatus status, LocalDate dataAquisicao, LocalDateTime dataUltimaAtualizacao, String observacoes, Usuario usuario, Agente agente) {
         this.modelo = modelo;
         this.marca = marca;
         this.numeroSerie = numeroSerie;
@@ -105,11 +106,11 @@ public class Dispositivo {
         this.status = status;
     }
 
-    public LocalDateTime getDataAquisicao() {
+    public LocalDate getDataAquisicao() {
         return dataAquisicao;
     }
 
-    public void setDataAquisicao(LocalDateTime dataAquisicao) {
+    public void setDataAquisicao(LocalDate dataAquisicao) {
         this.dataAquisicao = dataAquisicao;
     }
 

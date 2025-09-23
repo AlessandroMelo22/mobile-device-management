@@ -3,7 +3,6 @@ package com.alessandromelo.service;
 
 import com.alessandromelo.dto.agenteoperacoes.atualizarstatus.AtualizarStatusRequestDTO;
 import com.alessandromelo.dto.agenteoperacoes.atualizarstatus.AtualizarStatusResponseDTO;
-import com.alessandromelo.dto.agenteoperacoes.atualizarstatuscomando.AtualizarStatusComandoRequestDTO;
 import com.alessandromelo.dto.agenteoperacoes.buscarcomandospendentes.BuscarComandosPendentesResponseDTO;
 import com.alessandromelo.dto.agenteoperacoes.enviarlogs.EnviarLogsResponseDTO;
 import com.alessandromelo.entity.Agente;
@@ -17,6 +16,12 @@ import com.alessandromelo.repository.ComandoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+/**
+ * Endpoints chamados pelo próprio Agente
+ * (representa as operações que o Agente consegue fazer)
+ */
+
 
 @Service
 public class AgenteOperacoesService {
@@ -52,7 +57,16 @@ public class AgenteOperacoesService {
                 }).orElseThrow(()-> new AgenteNaoEncontradoException(agenteId));
     }
 
-//GET
+
+
+    /**
+     * O agente busca no banco se há comandos PENDENTES
+     *
+     * @param agenteId Id do Agente
+     * @return o Id do Agente junto com a lista de comandos PENDENTES, ou uma lista vazia se caso não houver nenhum comando
+     * @throws AgenteNaoEncontradoException se o Agente não existir no banco
+     */
+
     public BuscarComandosPendentesResponseDTO buscarComandosPendentes(Long agenteId){
 
         Agente agente = this.agenteRepository.findById(agenteId)
@@ -67,7 +81,7 @@ public class AgenteOperacoesService {
 
 
 
-    public void atualizarStatusComando(Long comandoId, AtualizarStatusComandoRequestDTO requestDTO){
+    public void atualizarStatusComando(Long comandoId){
         //logica para atualizar o status do comando (EXECUTADO ou FALHA) com base no comandoId e requestDTO
     }
 
